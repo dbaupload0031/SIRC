@@ -71,7 +71,7 @@ if (-not $pageAvailable) {
   throw "GitHub Pages report was not available within four minutes; LINE notification was not sent: $reportUrl"
 }
 
-$message = "SIRC 每日平台突破監控報告｜$DataDate`n$Summary`n完整報告：$reportUrl`n僅供監控與研究，不構成投資建議。"
+$message = "【每日平台突破報告】｜$DataDate`n$Summary`n完整報告：$reportUrl`n僅供監控與研究，不構成投資建議。"
 if ($message.Length -gt 5000) { throw 'LINE 訊息超過 5,000 字元限制。' }
 $payload = @{ to = $groupId; messages = @(@{ type = 'text'; text = $message }) } | ConvertTo-Json -Depth 5 -Compress
 $utf8Payload = [System.Text.Encoding]::UTF8.GetBytes($payload)
