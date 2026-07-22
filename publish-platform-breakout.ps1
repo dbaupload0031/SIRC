@@ -59,8 +59,9 @@ $reportUrl = "https://github.com/dbaupload0031/SIRC/blob/main/$relativeReportPat
 $message = "SIRC 每日平台突破監控報告｜$DataDate`n$Summary`n完整報告：$reportUrl`n僅供監控與研究，不構成投資建議。"
 if ($message.Length -gt 5000) { throw 'LINE 訊息超過 5,000 字元限制。' }
 $payload = @{ to = $groupId; messages = @(@{ type = 'text'; text = $message }) } | ConvertTo-Json -Depth 5 -Compress
-$headers = @{ Authorization = "Bearer $token"; 'Content-Type' = 'application/json' }
-Invoke-RestMethod -Uri 'https://api.line.me/v2/bot/message/push' -Method Post -Headers $headers -Body $payload | Out-Null
+$utf8Payload = [System.Text.Encoding]::UTF8.GetBytes($payload)
+$headers = @{ Authorization = "Bearer $token" }
+Invoke-RestMethod -Uri 'https://api.line.me/v2/bot/message/push' -Method Post -Headers $headers -ContentType 'application/json; charset=utf-8' -Body $utf8Payload | Out-Null
 
 [pscustomobject]@{
   data_date = $DataDate
