@@ -55,7 +55,22 @@ if ($LASTEXITCODE -ne 1) { throw 'Unable to inspect staged report changes.' }
 if ($LASTEXITCODE -ne 0) { throw 'Unable to commit the report.' }
 Invoke-SircGit push origin main
 
-$reportUrl = "https://github.com/dbaupload0031/SIRC/blob/main/$relativeReportPath"
+$reportUrl = "https://dbaupload0031.github.io/SIRC/platform-breakout/$([uri]::EscapeDataString($fileName))"
+$deploymentDeadline = (Get-Date).AddMinutes(4)
+$pageAvailable = $false
+do {
+  try {
+    $pageResponse = Invoke-WebRequest -Uri $reportUrl -Method Head -UseBasicParsing -TimeoutSec 20
+    $pageAvailable = $pageResponse.StatusCode -eq 200
+  } catch {
+    $pageAvailable = $false
+  }
+  if (-not $pageAvailable) { Start-Sleep -Seconds 10 }
+} while (-not $pageAvailable -and (Get-Date) -lt $deploymentDeadline)
+if (-not $pageAvailable) {
+  throw "GitHub Pages report was not available within four minutes; LINE notification was not sent: $reportUrl"
+}
+
 $message = "SIRC 每日平台突破監控報告｜$DataDate`n$Summary`n完整報告：$reportUrl`n僅供監控與研究，不構成投資建議。"
 if ($message.Length -gt 5000) { throw 'LINE 訊息超過 5,000 字元限制。' }
 $payload = @{ to = $groupId; messages = @(@{ type = 'text'; text = $message }) } | ConvertTo-Json -Depth 5 -Compress
