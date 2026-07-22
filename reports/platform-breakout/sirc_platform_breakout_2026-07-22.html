@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SIRC 平台整理突破監控報告｜2026-07-22</title>
+  <style>
+    :root { --ink:#172b45; --muted:#617087; --paper:#f3f6fa; --card:#fff; --line:#dce4ee; --navy:#10345a; --blue:#1769aa; --green:#087f5b; --amber:#a65e00; --red:#b93845; }
+    * { box-sizing:border-box; } body { margin:0; background:var(--paper); color:var(--ink); font:15px/1.65 "Noto Sans TC","Microsoft JhengHei",Arial,sans-serif; }
+    main { width:min(1040px,calc(100% - 28px)); margin:24px auto 42px; } header { padding:30px; color:#fff; background:linear-gradient(135deg,#0d2b4b,#1e6ea8); border-radius:20px; }
+    h1 { margin:0 0 8px; font-size:clamp(25px,4vw,36px); line-height:1.2; } h2 { margin:0 0 12px; font-size:21px; } p { margin:0 0 10px; }
+    .eyebrow { margin-bottom:6px; color:#cfe7fc; font-weight:700; font-size:12px; letter-spacing:.14em; } .meta { color:#dcecf9; font-size:13px; }
+    .grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(210px,1fr)); gap:13px; margin-top:20px; } .metric { padding:14px 16px; border:1px solid rgba(255,255,255,.22); border-radius:13px; background:rgba(255,255,255,.1); } .metric small { display:block; color:#d2e6f8; } .metric strong { display:block; margin-top:2px; font-size:18px; }
+    section { margin-top:18px; padding:22px; background:var(--card); border:1px solid var(--line); border-radius:17px; box-shadow:0 8px 22px rgba(26,50,77,.07); } .sub { color:var(--muted); font-size:13px; }
+    .empty { padding:20px; border:1px dashed #9eafc3; border-radius:13px; text-align:center; background:#f8fbfe; } .empty strong { display:block; color:var(--green); font-size:21px; }
+    .callout { padding:13px 15px; border-left:4px solid var(--blue); border-radius:8px; background:#eef6fd; } .warning { border-left-color:var(--amber); background:#fff7e8; } .risk { border-left-color:var(--red); background:#fff1f2; }
+    table { width:100%; border-collapse:collapse; } th,td { padding:10px; border-bottom:1px solid var(--line); text-align:left; vertical-align:top; } th { width:34%; color:#516176; background:#f7f9fc; font-size:13px; } .table-wrap { overflow-x:auto; }
+    ul { margin:8px 0 0; padding-left:22px; } footer { padding:18px 4px 0; color:var(--muted); text-align:center; font-size:12px; }
+    @media (max-width:640px) { main { width:min(100% - 16px,1040px); margin-top:8px; } header,section { padding:17px; border-radius:14px; } th { width:42%; } }
+  </style>
+</head>
+<body>
+  <main>
+    <header>
+      <p class="eyebrow">SIRC DAILY MONITOR · PLATFORM BREAKOUT</p>
+      <h1>平台整理突破 IRC 監控報告</h1>
+      <p class="meta">實際資料日期：2026-07-22｜執行時間：2026-07-22 10:58（Asia/Taipei）｜查詢狀態：成功（HTTP 200）</p>
+      <div class="grid">
+        <div class="metric"><small>符合標的</small><strong>0 檔</strong></div>
+        <div class="metric"><small>最值得注意標的</small><strong>無</strong></div>
+        <div class="metric"><small>SAM 可評分標的</small><strong>0 檔</strong></div>
+        <div class="metric"><small>監控結論</small><strong>今日無符合標的</strong></div>
+      </div>
+    </header>
+
+    <section>
+      <h2>結論</h2>
+      <div class="empty"><strong>今日無符合標的</strong>2026-07-22 的首突破查詢已完成；在既定條件下未撈得任何股票，因此無注意優先級排序、無最值得注意標的，亦無個別 SAM 與 Traffic Light 可呈列。</div>
+      <p class="sub" style="margin-top:12px">系統回傳的查詢日期為 2026-07-22，故本次未改採舊交易日。0 檔僅代表未通過本次篩選門檻，不代表市場沒有交易資料。</p>
+    </section>
+
+    <section>
+      <h2>查詢條件與資料稽核</h2>
+      <div class="table-wrap"><table><tbody>
+        <tr><th>服務狀態</th><td><code>GET /platform-breakout</code>：HTTP 200；服務可連線，未啟動新服務。</td></tr>
+        <tr><th>結果查詢</th><td><code>POST /platform-breakout-result</code>：HTTP 200；系統回覆 mode＝突破當日、query date＝2026-07-22、共 0 檔。</td></tr>
+        <tr><th>模式</th><td><code>initial</code>（首突破／突破當日）</td></tr>
+        <tr><th>平台與突破</th><td>60 日箱體 ≤ 45.0%；20 日箱體 ≤ 30.0%；收盤 ≥ 60 日高點的 96.0%。</td></tr>
+        <tr><th>成交量</th><td>成交量 ≥ 2,000 張；當日量／20 日均量 ≥ 1.30；5 日均量／20 日均量 ≥ 1.00。</td></tr>
+        <tr><th>均線</th><td>MA20／MA60 ≥ 0.980；MA20 相對 5 日前趨勢 ≥ 0.980。</td></tr>
+      </tbody></table></div>
+    </section>
+
+    <section>
+      <h2>SAM 與 Traffic Light</h2>
+      <div class="callout warning">本次結果為 0 檔，沒有可套用 SAM 的個股。另經既有平台突破追蹤頁檢查，研究欄位可見 <code>confidence_score</code>，但未見可供本次重算的 SIRC/SAM 通用計分規則或 Traffic Light 門檻；因此沒有臆造分數、燈號或注意優先級。</div>
+      <p class="sub" style="margin-top:12px">若後續有標的入選，需先提供或接入正式 SAM 權重、覆寫規則與燈號門檻，才可產出可稽核的個別分數與排序。</p>
+    </section>
+
+    <section>
+      <h2>後續觀察點與風險</h2>
+      <div class="callout risk">主要風險：首突破條件偏嚴格時，可能排除量能尚未放大、或剛站回平台但尚未確認的股票；反之，放寬門檻也會提高假突破噪音。請持續以收盤、量能與均線結構確認，勿將本監控名單視為直接買賣指示。</div>
+      <ul>
+        <li>下一次執行：以當日實際可用資料重新套用相同條件，確認是否出現首突破標的。</li>
+        <li>若出現入選標的：先檢查正式 SAM 資料／規則的可用性，再依既有規則排序與標示 Traffic Light。</li>
+        <li>本報告僅供監控與研究，不保證獲利，亦不構成投資建議或下單指示。</li>
+      </ul>
+    </section>
+    <footer>資料來源：本機 SIRC 平台 <code>localhost:8080</code> 的平台整理突破查詢結果。報告檔案以實際資料日期命名。</footer>
+  </main>
+</body>
+</html>

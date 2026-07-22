@@ -1,0 +1,6 @@
+# Local delivery credentials. Never commit these values.
+.env
+.env.*
+!.env.example
+line-secrets.*
+*.token
