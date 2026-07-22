@@ -14,8 +14,8 @@
     .grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:14px; margin:18px 0; } .card { background:var(--card); border:1px solid var(--line); border-radius:12px; padding:17px; box-shadow:0 2px 8px #17203308; }
     .label { color:var(--muted); font-size:.87rem; } .value { font-size:1.65rem; font-weight:800; color:var(--navy); margin-top:2px; }
     .callout { border-left:4px solid var(--amber); background:var(--amber-bg); border-radius:8px; padding:14px 16px; }
-    .table-wrap { overflow-x:auto; border:1px solid var(--line); border-radius:12px; background:#fff; } table { width:100%; border-collapse:collapse; min-width:1010px; } th,td { padding:11px 10px; text-align:left; vertical-align:top; border-bottom:1px solid var(--line); font-size:.9rem; } th { background:#eaf1f8; color:#213f5e; white-space:nowrap; } tr:last-child td { border-bottom:0; } .rank { font-weight:800; color:var(--blue); } .stock-link { color:var(--blue); text-decoration:underline; text-decoration-thickness:1px; text-underline-offset:3px; } .stock-link:hover,.stock-link:focus-visible { color:var(--navy); } .gray { display:inline-block; color:#45505e; background:var(--gray-bg); padding:2px 7px; border-radius:999px; font-size:.8rem; white-space:nowrap; } .priority { font-weight:700; } .up { color:#b42318; font-weight:700; } .down { color:#067647; font-weight:700; } .institution td:first-child { background:#f8fafc; } ul { padding-left:1.25rem; } .foot { margin-top:25px; color:var(--muted); font-size:.88rem; } .source { background:#fff; border:1px solid var(--line); border-radius:12px; padding:16px; color:var(--muted); font-size:.9rem; }
-    @media (max-width:720px) { html,body { max-width:100%; overflow-x:hidden; } main { width:100%; min-width:0; padding:18px 13px 38px; } .hero,.grid,.card,.callout,.source,.table-wrap { max-width:100%; min-width:0; } .hero { padding:22px 19px; } .grid { grid-template-columns:minmax(0,1fr); } .sub,.card,.callout,.source { overflow-wrap:anywhere; } .table-wrap { overflow-x:auto; -webkit-overflow-scrolling:touch; } }
+    .table-wrap { overflow-x:auto; border:1px solid var(--line); border-radius:12px; background:#fff; } table { width:100%; border-collapse:collapse; min-width:1010px; } th,td { padding:11px 10px; text-align:left; vertical-align:top; border-bottom:1px solid var(--line); font-size:.9rem; } th { background:#eaf1f8; color:#213f5e; white-space:nowrap; } tr:last-child td { border-bottom:0; } .rank { font-weight:800; color:var(--blue); } .stock-link { color:var(--blue); text-decoration:underline; text-decoration-thickness:1px; text-underline-offset:3px; } .stock-link:hover,.stock-link:focus-visible { color:var(--navy); } .gray { display:inline-block; color:#45505e; background:var(--gray-bg); padding:2px 7px; border-radius:999px; font-size:.8rem; white-space:nowrap; } .priority { font-weight:700; } .up { color:#b42318; font-weight:700; } .down { color:#067647; font-weight:700; } .institution td:first-child { background:#f8fafc; } .chip-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(340px,1fr)); gap:14px; } .chip-card { overflow:hidden; border:1px solid var(--line); border-radius:16px; background:#fff; box-shadow:0 2px 8px #17203308; } .chip-card-head { display:flex; align-items:center; justify-content:space-between; gap:12px; padding:13px 15px; color:#fff; background:var(--navy); } .chip-card-head h3 { margin:0; font-size:1.06rem; } .chip-card-head .stock-link { color:#fff; } .chip-card-head .stock-link:hover,.chip-card-head .stock-link:focus-visible { color:#dcecff; } .chip-card-body { padding:14px 15px; } .flow-badge { display:inline-block; padding:3px 9px; border-radius:999px; font-size:.76rem; font-weight:800; white-space:nowrap; } .flow-badge.positive { color:#087f5b; background:#dff4ea; } .flow-badge.mixed { color:#965a00; background:#fff0d3; } .flow-badge.negative { color:#667085; background:#f1f3f5; } .chip-verdict { margin:0 0 12px; padding:10px 12px; border-radius:10px; background:#f6f8fb; font-weight:700; } .flow-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:8px; } .flow-item { min-width:0; padding:9px; border:1px solid var(--line); border-radius:10px; background:#fff; } .flow-label { display:block; color:var(--muted); font-size:.72rem; } .flow-value { display:block; font-size:1rem; font-weight:800; font-variant-numeric:tabular-nums; } .flow-note { display:block; color:var(--muted); font-size:.72rem; } .chip-divider { margin:13px 0; border:0; border-top:1px solid var(--line); } .chip-foot { display:grid; grid-template-columns:1fr 1fr; gap:10px; color:var(--muted); font-size:.76rem; } .chip-foot strong { display:block; color:var(--ink); font-size:.88rem; } .detail-title { margin:22px 0 8px; color:var(--navy); } ul { padding-left:1.25rem; } .foot { margin-top:25px; color:var(--muted); font-size:.88rem; } .source { background:#fff; border:1px solid var(--line); border-radius:12px; padding:16px; color:var(--muted); font-size:.9rem; }
+    @media (max-width:720px) { html,body { max-width:100%; overflow-x:hidden; } main { width:100%; min-width:0; padding:18px 13px 38px; } .hero,.grid,.card,.callout,.source,.table-wrap,.chip-card { max-width:100%; min-width:0; } .hero { padding:22px 19px; } .grid,.chip-grid { grid-template-columns:minmax(0,1fr); } .flow-grid { grid-template-columns:repeat(3,minmax(74px,1fr)); } .chip-foot { grid-template-columns:1fr; } .sub,.card,.callout,.source,.chip-verdict { overflow-wrap:anywhere; } .table-wrap { overflow-x:auto; -webkit-overflow-scrolling:touch; } }
   </style>
 </head>
 <body>
@@ -50,6 +50,56 @@
 
   <h2>三大法人今日與近期買賣超</h2>
   <div class="source" style="margin-bottom:12px"><strong>單位：張；資料日：2026-07-22。</strong>今日買進／賣出與買賣超取自 TWSE T86 精確股數後四捨五入；3／5／10 日採最近 10 個實際有 T86 資料的交易日：7/22、7/21、7/20、7/17、7/16、7/15、7/14、7/13、7/9、7/8。</div>
+  <div class="chip-grid" aria-label="三大法人卡片摘要">
+    <article class="chip-card">
+      <div class="chip-card-head"><h3><a class="stock-link" href="http://localhost:8080/kline/5871" target="_blank" rel="noopener">5871 中租-KY</a></h3><span class="flow-badge positive">偏多分歧</span></div>
+      <div class="chip-card-body">
+        <p class="chip-verdict">外資今日轉賣、投信連 10 買；三大法人維持連 8 買。</p>
+        <div class="flow-grid"><div class="flow-item"><span class="flow-label">外資今日</span><strong class="flow-value down">-413</strong><span class="flow-note">連1賣</span></div><div class="flow-item"><span class="flow-label">投信今日</span><strong class="flow-value up">+2,926</strong><span class="flow-note">連10買</span></div><div class="flow-item"><span class="flow-label">三大今日</span><strong class="flow-value up">+2,452</strong><span class="flow-note">連8買</span></div></div>
+        <hr class="chip-divider"><div class="flow-grid"><div class="flow-item"><span class="flow-label">三大 3 日</span><strong class="flow-value up">+14,886</strong></div><div class="flow-item"><span class="flow-label">三大 5 日</span><strong class="flow-value up">+23,390</strong></div><div class="flow-item"><span class="flow-label">三大 10 日</span><strong class="flow-value up">+27,281</strong></div></div>
+        <hr class="chip-divider"><div class="chip-foot"><div>自營商今日<strong class="down">-61 張｜連1賣</strong></div><div>判讀重點<strong>投信續買抵銷外資轉賣</strong></div></div>
+      </div>
+    </article>
+    <article class="chip-card">
+      <div class="chip-card-head"><h3><a class="stock-link" href="http://localhost:8080/kline/2615" target="_blank" rel="noopener">2615 萬海</a></h3><span class="flow-badge positive">法人同向</span></div>
+      <div class="chip-card-body">
+        <p class="chip-verdict">外資連 4 買、投信連 3 買；三大法人今日買超居五檔之首。</p>
+        <div class="flow-grid"><div class="flow-item"><span class="flow-label">外資今日</span><strong class="flow-value up">+4,684</strong><span class="flow-note">連4買</span></div><div class="flow-item"><span class="flow-label">投信今日</span><strong class="flow-value up">+12</strong><span class="flow-note">連3買</span></div><div class="flow-item"><span class="flow-label">三大今日</span><strong class="flow-value up">+4,400</strong><span class="flow-note">連4買</span></div></div>
+        <hr class="chip-divider"><div class="flow-grid"><div class="flow-item"><span class="flow-label">三大 3 日</span><strong class="flow-value up">+21,526</strong></div><div class="flow-item"><span class="flow-label">三大 5 日</span><strong class="flow-value up">+22,629</strong></div><div class="flow-item"><span class="flow-label">三大 10 日</span><strong class="flow-value up">+36,504</strong></div></div>
+        <hr class="chip-divider"><div class="chip-foot"><div>自營商今日<strong class="down">-296 張｜連1賣</strong></div><div>判讀重點<strong>外資主導、法人動能最強</strong></div></div>
+      </div>
+    </article>
+    <article class="chip-card">
+      <div class="chip-card-head"><h3><a class="stock-link" href="http://localhost:8080/kline/2812" target="_blank" rel="noopener">2812 台中銀</a></h3><span class="flow-badge mixed">外資主導</span></div>
+      <div class="chip-card-body">
+        <p class="chip-verdict">外資連 2 買；投信與自營商賣超，三大仍維持連 2 買。</p>
+        <div class="flow-grid"><div class="flow-item"><span class="flow-label">外資今日</span><strong class="flow-value up">+2,606</strong><span class="flow-note">連2買</span></div><div class="flow-item"><span class="flow-label">投信今日</span><strong class="flow-value down">-22</strong><span class="flow-note">連1賣</span></div><div class="flow-item"><span class="flow-label">三大今日</span><strong class="flow-value up">+2,381</strong><span class="flow-note">連2買</span></div></div>
+        <hr class="chip-divider"><div class="flow-grid"><div class="flow-item"><span class="flow-label">三大 3 日</span><strong class="flow-value up">+17,951</strong></div><div class="flow-item"><span class="flow-label">三大 5 日</span><strong class="flow-value up">+46,251</strong></div><div class="flow-item"><span class="flow-label">三大 10 日</span><strong class="flow-value up">+47,170</strong></div></div>
+        <hr class="chip-divider"><div class="chip-foot"><div>自營商今日<strong class="down">-203 張｜連2賣</strong></div><div>判讀重點<strong>買盤集中外資，內資偏弱</strong></div></div>
+      </div>
+    </article>
+    <article class="chip-card">
+      <div class="chip-card-head"><h3><a class="stock-link" href="http://localhost:8080/kline/2836" target="_blank" rel="noopener">2836 高雄銀</a></h3><span class="flow-badge negative">短線轉賣</span></div>
+      <div class="chip-card-body">
+        <p class="chip-verdict">外資、自營商同步賣超；三大法人由買轉賣，突破缺同日籌碼確認。</p>
+        <div class="flow-grid"><div class="flow-item"><span class="flow-label">外資今日</span><strong class="flow-value down">-47</strong><span class="flow-note">連1賣</span></div><div class="flow-item"><span class="flow-label">投信今日</span><strong class="flow-value">0</strong><span class="flow-note">連2平</span></div><div class="flow-item"><span class="flow-label">三大今日</span><strong class="flow-value down">-67</strong><span class="flow-note">連1賣</span></div></div>
+        <hr class="chip-divider"><div class="flow-grid"><div class="flow-item"><span class="flow-label">三大 3 日</span><strong class="flow-value up">+1,591</strong></div><div class="flow-item"><span class="flow-label">三大 5 日</span><strong class="flow-value up">+4,856</strong></div><div class="flow-item"><span class="flow-label">三大 10 日</span><strong class="flow-value up">+8,151</strong></div></div>
+        <hr class="chip-divider"><div class="chip-foot"><div>自營商今日<strong class="down">-20 張｜連2賣</strong></div><div>判讀重點<strong>中期仍正，短線須重新轉買</strong></div></div>
+      </div>
+    </article>
+    <article class="chip-card">
+      <div class="chip-card-head"><h3><a class="stock-link" href="http://localhost:8080/kline/9938" target="_blank" rel="noopener">9938 百和</a></h3><span class="flow-badge negative">偏空分歧</span></div>
+      <div class="chip-card-body">
+        <p class="chip-verdict">外資與投信同步賣超；自營商連 4 買仍不足以抵銷外資賣壓。</p>
+        <div class="flow-grid"><div class="flow-item"><span class="flow-label">外資今日</span><strong class="flow-value down">-1,630</strong><span class="flow-note">連1賣</span></div><div class="flow-item"><span class="flow-label">投信今日</span><strong class="flow-value down">-14</strong><span class="flow-note">連1賣</span></div><div class="flow-item"><span class="flow-label">三大今日</span><strong class="flow-value down">-1,406</strong><span class="flow-note">連1賣</span></div></div>
+        <hr class="chip-divider"><div class="flow-grid"><div class="flow-item"><span class="flow-label">三大 3 日</span><strong class="flow-value down">-1,073</strong></div><div class="flow-item"><span class="flow-label">三大 5 日</span><strong class="flow-value down">-798</strong></div><div class="flow-item"><span class="flow-label">三大 10 日</span><strong class="flow-value up">+385</strong></div></div>
+        <hr class="chip-divider"><div class="chip-foot"><div>自營商今日<strong class="up">+238 張｜連4買</strong></div><div>判讀重點<strong>外資賣壓未收斂，維持低優先</strong></div></div>
+      </div>
+    </article>
+  </div>
+
+  <h3 class="detail-title">法人完整明細</h3>
+  <p class="source" style="margin-bottom:12px">以下保留買進、賣出、外資／投信／自營商／三大合計、3／5／10 日與連續性；手機可在表格內橫向捲動。</p>
   <div class="table-wrap">
     <table class="institution">
       <thead><tr><th>標的</th><th>法人</th><th>今日買進</th><th>今日賣出</th><th>今日買賣超</th><th>3日</th><th>5日</th><th>10日</th><th>連續性</th></tr></thead>
