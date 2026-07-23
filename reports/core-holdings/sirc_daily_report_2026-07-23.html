@@ -1,0 +1,517 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>核心持股每日籌碼技術報告</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --ink: #132238;
+      --muted: #66758a;
+      --paper: #f3f6fa;
+      --card: #ffffff;
+      --line: #dbe3ed;
+      --navy: #102d4f;
+      --blue: #2463a7;
+      --green: #087f5b;
+      --amber: #b86800;
+      --red: #c63d47;
+      --shadow: 0 10px 28px rgba(24, 47, 76, .08);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      background: var(--paper);
+      color: var(--ink);
+      font-family: "Noto Sans TC", "Microsoft JhengHei", Arial, sans-serif;
+      font-size: 15px;
+      line-height: 1.65;
+    }
+
+    .page {
+      width: min(1080px, calc(100% - 28px));
+      margin: 22px auto 40px;
+    }
+
+    .hero {
+      padding: 28px;
+      border-radius: 22px;
+      color: #fff;
+      background: linear-gradient(135deg, #0c2745 0%, #174f82 72%, #2f77b7 100%);
+      box-shadow: var(--shadow);
+    }
+
+    .eyebrow {
+      margin: 0 0 6px;
+      color: #cfe5fa;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+    }
+
+    h1, h2, h3, p { margin-top: 0; }
+    h1 { margin-bottom: 8px; font-size: clamp(25px, 4vw, 38px); line-height: 1.2; }
+    h2 { margin-bottom: 14px; font-size: 21px; }
+    h3 { margin-bottom: 8px; font-size: 18px; }
+
+    .meta { margin: 0; color: #d9e8f6; font-size: 13px; }
+
+    .hero-grid,
+    .stock-grid,
+    .metric-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+      gap: 14px;
+    }
+
+    .hero-grid { margin-top: 22px; }
+
+    .hero-card {
+      padding: 14px 16px;
+      border: 1px solid rgba(255,255,255,.18);
+      border-radius: 14px;
+      background: rgba(255,255,255,.10);
+    }
+
+    .hero-card small { display: block; color: #cfe5fa; }
+    .hero-card strong { display: block; margin-top: 3px; font-size: 18px; }
+
+    .section {
+      margin-top: 18px;
+      padding: 22px;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      background: var(--card);
+      box-shadow: var(--shadow);
+    }
+
+    .section-head {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 14px;
+      margin-bottom: 14px;
+    }
+
+    .section-head p { margin: 0; color: var(--muted); font-size: 13px; }
+
+    .stock-card {
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      background: #fff;
+    }
+
+    .stock-card-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 16px;
+      color: #fff;
+      background: var(--navy);
+    }
+
+    .stock-card-head h3 { margin: 0; }
+    .stock-card-body { padding: 16px; }
+
+    .score {
+      min-width: 54px;
+      text-align: center;
+      font-size: 20px;
+      font-weight: 800;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 3px 9px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: .02em;
+    }
+
+    .buy, .pilot-buy { background: #d8f4e9; color: var(--green); }
+    .hold { background: #dcecff; color: var(--blue); }
+    .protect { background: #fff0d3; color: var(--amber); }
+    .reduce, .exit { background: #ffe0e3; color: var(--red); }
+    .verified { background: #e4f5ed; color: var(--green); }
+    .provisional { background: #fff1d6; color: var(--amber); }
+    .missing { background: #f1f3f5; color: #667085; }
+
+    .metric {
+      padding: 12px;
+      border-radius: 12px;
+      background: #f6f8fb;
+    }
+
+    .metric small { display: block; color: var(--muted); }
+    .metric strong { font-size: 17px; }
+
+    .up { color: var(--red); }
+    .down { color: var(--green); }
+    .flat { color: var(--muted); }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-variant-numeric: tabular-nums;
+    }
+
+    th, td {
+      padding: 10px 9px;
+      border-bottom: 1px solid var(--line);
+      text-align: right;
+      vertical-align: top;
+    }
+
+    th:first-child, td:first-child { text-align: left; }
+    th { color: #52637a; background: #f7f9fc; font-size: 12px; }
+
+    .table-wrap { overflow-x: auto; border: 1px solid var(--line); border-radius: 12px; }
+    .table-wrap table { min-width: 620px; }
+
+    .chip-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 14px;
+    }
+
+    .chip-card {
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      background: #fff;
+    }
+
+    .chip-card-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 13px 15px;
+      color: #fff;
+      background: var(--navy);
+    }
+
+    .chip-card-head h3 { margin: 0; font-size: 17px; }
+    .chip-card-body { padding: 14px 15px; }
+
+    .chip-verdict {
+      margin: 0 0 12px;
+      padding: 10px 12px;
+      border-radius: 10px;
+      background: #f6f8fb;
+      font-weight: 700;
+    }
+
+    .flow-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 8px;
+    }
+
+    .flow-item {
+      min-width: 0;
+      padding: 9px;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: #fff;
+    }
+
+    .flow-label { display: block; color: var(--muted); font-size: 11px; }
+    .flow-value { display: block; font-size: 16px; font-weight: 800; font-variant-numeric: tabular-nums; }
+    .flow-note { display: block; color: var(--muted); font-size: 11px; }
+
+    .chip-divider {
+      margin: 13px 0;
+      border: 0;
+      border-top: 1px solid var(--line);
+    }
+
+    .chip-foot {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .chip-foot strong { display: block; color: var(--ink); font-size: 14px; }
+    .audit-title { margin: 20px 0 10px; }
+
+    .factor-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 14px;
+      margin-top: 14px;
+    }
+
+    .factor-card {
+      padding: 15px;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: #fff;
+    }
+
+    .factor-card-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 9px;
+    }
+
+    .factor-card-head h3 { margin: 0; font-size: 17px; }
+    .factor-score { font-size: 23px; font-weight: 900; color: var(--navy); }
+    .factor-detail { margin: 0; color: var(--muted); font-size: 13px; }
+    .factor-verdict { margin: 9px 0 0; font-weight: 800; }
+
+    .callout {
+      margin-top: 12px;
+      padding: 13px 15px;
+      border-left: 4px solid var(--blue);
+      border-radius: 8px;
+      background: #eef5fc;
+    }
+
+    .callout.risk { border-left-color: var(--red); background: #fff1f2; }
+    .callout.warning { border-left-color: var(--amber); background: #fff7e8; }
+
+    .checklist { margin: 0; padding: 0; list-style: none; }
+    .checklist li { padding: 8px 0; border-bottom: 1px dashed var(--line); }
+
+    .sources { color: var(--muted); font-size: 12px; }
+    .sources a { color: var(--blue); word-break: break-all; }
+
+    .footer {
+      padding: 20px 4px 0;
+      color: var(--muted);
+      text-align: center;
+      font-size: 12px;
+    }
+
+    @media (max-width: 640px) {
+      .page { width: min(100% - 16px, 1080px); margin-top: 8px; }
+      .hero, .section { padding: 17px; border-radius: 14px; }
+      .section-head { display: block; }
+      .stock-grid { grid-template-columns: 1fr; }
+      .chip-grid { grid-template-columns: 1fr; }
+      .factor-grid { grid-template-columns: 1fr; }
+      .flow-grid { grid-template-columns: repeat(3, minmax(78px, 1fr)); }
+      .chip-foot { grid-template-columns: 1fr; }
+    }
+
+    @media print {
+      body { background: #fff; }
+      .page { width: 100%; margin: 0; }
+      .hero, .section { box-shadow: none; break-inside: avoid; }
+      a { color: inherit; text-decoration: none; }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <header class="hero">
+      <p class="eyebrow">SIRC DAILY MONITOR</p>
+      <h1>核心持股每日籌碼技術報告</h1>
+      <p class="meta">行情日 2026-07-23｜抓取 2026-07-23 20:46–20:58（Asia/Taipei）｜資料狀態 行情／法人／融資融券／借券／主力均已對齊 2026-07-23</p>
+      <div class="hero-grid">
+        <div class="hero-card"><small>綜合強弱</small><strong>2376 ＞ 6416 ＞ 3034 ＞ 2379</strong></div>
+        <div class="hero-card"><small>今日關鍵變化</small><strong>2376 收 354.5、創20日新高且量達20日均量1.22倍，Hold → Pilot Buy</strong></div>
+        <div class="hero-card"><small>最大風險</small><strong>6416 外資、三大與主力同步轉賣；2379 外資連4賣</strong></div>
+        <div class="hero-card"><small>隔日主檢查點</small><strong>2376 守住350並見外資止賣；6416 突破109且融資不再擴張</strong></div>
+      </div>
+    </header>
+
+    <section class="section">
+      <div class="section-head">
+        <h2>組合儀表板</h2>
+        <p>只呈現相較前一交易日真正改變的資訊</p>
+      </div>
+      <div class="callout"><strong>今日真正變化：</strong>2376 技嘉收盤 354.5，突破前一確認點 350 並創20日新高，量能為20日均量1.22倍，SAM 80→90，依法人門未過硬性覆寫為 Pilot Buy。6416 瑞祺電通融資轉減但外資、三大與主力同日轉賣，SAM 92→85，維持 Pilot Buy、風險升高。3034 聯詠外資與三大續買、信用籌碼再降，SAM 72→78，但仍未收復MA20，維持 Hold。2379 瑞昱融資與借券回落，SAM 52→54；外資連4賣且三大連2賣，仍為 Protect。</div>
+      <div class="callout warning"><strong>三種排名各回答不同問題：</strong>技術強弱 6416 ＞ 2376 ＞ 3034 ＞ 2379；籌碼強弱 3034 ＞ 2376 ＞ 6416 ＞ 2379；SAM綜合準備度 2376 ＞ 6416 ＞ 3034 ＞ 2379。四因子籌碼品質另列於下一節，不與SAM混為同一訊號。</div>
+      <div class="table-wrap"><table>
+        <thead><tr><th>排名</th><th>標的</th><th>收盤／漲跌</th><th>SAM</th><th>Traffic Light</th><th>相較7/22</th><th>監控結論</th></tr></thead>
+        <tbody>
+          <tr><td>1</td><td>2376 技嘉</td><td class="up">354.5／+1.87%</td><td><strong>90</strong></td><td><span class="badge pilot-buy">Pilot Buy</span></td><td>+10／Hold→Pilot Buy</td><td>價格與量價門通過，外資連6賣使Buy不成立</td></tr>
+          <tr><td>2</td><td>6416 瑞祺電通</td><td class="up">106.5／+0.47%</td><td><strong>85</strong></td><td><span class="badge pilot-buy">Pilot Buy</span></td><td>-7／狀態不變</td><td>趨勢仍強、融資降溫；法人與主力轉賣</td></tr>
+          <tr><td>3</td><td>3034 聯詠</td><td class="up">503／+0.40%</td><td><strong>78</strong></td><td><span class="badge hold">Hold</span></td><td>+6／狀態不變</td><td>籌碼最乾淨，但MA20與量能門未過</td></tr>
+          <tr><td>4</td><td>2379 瑞昱</td><td class="up">745／+0.27%</td><td><strong>54</strong></td><td><span class="badge protect">Protect</span></td><td>+2／狀態不變</td><td>去槓桿改善，外資與三大賣壓尚未扭轉</td></tr>
+        </tbody>
+      </table></div>
+      <p class="sources">加權指數收 44,850.81（+0.06%），5／10／20日報酬 -1.70%／-1.93%／-2.59%。2376與6416在三個期間均明顯勝出；3034、2379僅近5日相對轉強，10／20日仍落後。</p>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <h2>借券 × 外資 × 融資 × 股價四因子綜合判讀</h2>
+        <p>同日資料、成交量標準化、交互覆寫；只作風險與籌碼結構輔助</p>
+      </div>
+      <div class="callout"><strong>模型規格：</strong>外資30＋股價30＋融資20＋借券20。外資、融資餘額增減與借券賣出餘額增減均除以本機同口徑成交量；四項資料均為2026-07-23。分數為草案監控規則，只可增加警戒或降低候選，不得單獨升級Traffic Light。</div>
+      <div class="callout warning"><strong>交互覆寫：</strong>未站上MA20不得列「乾淨偏多」；價漲且融資占量逾10%列「融資過熱」；外資賣超占量至少10%且借券增加占量至少5%時，最高只列多空拉鋸；價跌、外資賣、融資增、借券增同時發生才列空方共振。</div>
+      <div class="table-wrap"><table>
+        <thead><tr><th>標的</th><th>外資占量／分</th><th>股價結構／分</th><th>融資增減占量／分</th><th>借券增減占量／分</th><th>合計</th><th>覆寫後判讀</th></tr></thead>
+        <tbody>
+          <tr><td>3034 聯詠</td><td class="up">+27.14%／30</td><td>+0.40%、低於MA20／20</td><td class="up">-2.05%／20</td><td class="up">-8.44%／20</td><td><strong>90</strong></td><td>偏多但結構未完成</td></tr>
+          <tr><td>6416 瑞祺電通</td><td class="down">-2.67%／10</td><td>+0.47%、MA5&gt;MA20／30</td><td class="up">-3.12%／20</td><td>+0.53%／15</td><td><strong>75</strong></td><td>偏多但法人轉弱</td></tr>
+          <tr><td>2376 技嘉</td><td class="down">-13.25%／0</td><td>+1.87%、突破20日高／30</td><td class="up">-1.88%／20</td><td class="down">+2.63%／10</td><td><strong>60</strong></td><td>突破但外資對作</td></tr>
+          <tr><td>2379 瑞昱</td><td class="down">-27.03%／0</td><td>+0.27%、低於MA20／20</td><td class="up">-1.32%／20</td><td class="up">-5.06%／20</td><td><strong>60</strong></td><td>去槓桿、外資續賣</td></tr>
+        </tbody>
+      </table></div>
+      <div class="callout"><strong>四因子品質排名：</strong>3034 ＞ 6416 ＞ 2376 ＞ 2379。3034由87升至90，外資續買且融資、借券同步下降，是最乾淨組合；6416由75持平，但風險由融資過熱轉為法人與主力轉弱；2376由55升至60，價格突破與融資下降被外資連賣及借券增加抵銷；2379由15升至60，融資與借券轉降解除空方共振，但外資賣超占量仍高達27.03%。</div>
+      <div class="factor-grid">
+        <article class="factor-card"><div class="factor-card-head"><h3>3034 聯詠</h3><span class="factor-score">90</span></div><span class="badge hold">結構待確認</span><p class="factor-verdict">籌碼乾淨，但價格仍卡在MA20下方。</p><p class="factor-detail">支持：外資+1,164張、融資-88張、借券-362張。反證：收盤503仍低於MA20 508.9且量僅20日均量0.72倍。下一證據是收盤站上508.9、量達5,948張，並見投信停止連賣。</p></article>
+        <article class="factor-card"><div class="factor-card-head"><h3>6416 瑞祺電通</h3><span class="factor-score">75</span></div><span class="badge pilot-buy">偏多有風險</span><p class="factor-verdict">融資降溫是好事，法人與主力轉賣是新警報。</p><p class="factor-detail">支持：融資-47張，前日連6增的擁擠開始消化；股價仍在所有均線之上。反證：外資-40張、三大-32張、主力-142張。下一證據是突破109且外資恢復買超，否則高檔整理可能延長。</p></article>
+        <article class="factor-card"><div class="factor-card-head"><h3>2376 技嘉</h3><span class="factor-score">60</span></div><span class="badge protect">多空拉鋸</span><p class="factor-verdict">價格與融資支持突破，外資與借券反向。</p><p class="factor-detail">支持：收盤創20日高、量1.22倍、融資-136張、主力+1,881張。反證：外資連6賣且當日-957張，借券+190張。下一證據是守住350並見外資止賣；跌回344.5以下視為突破失敗。</p></article>
+        <article class="factor-card"><div class="factor-card-head"><h3>2379 瑞昱</h3><span class="factor-score">60</span></div><span class="badge protect">改善但未翻多</span><p class="factor-verdict">信用籌碼去槓桿，但外資賣壓仍主導。</p><p class="factor-detail">支持：融資-44張、借券-169張、股價小漲。反證：外資-903張、連4賣，三大連2賣，收盤仍低於MA20 770.6。需外資至少連2買並收復MA20；單日轉買不得判定翻多。</p></article>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <h2>個股監控</h2>
+        <p>卡片數量隨監控標的自動增減</p>
+      </div>
+      <div class="stock-grid">
+        <article class="stock-card">
+          <div class="stock-card-head"><h3>2376 技嘉</h3><div class="score">90</div></div>
+          <div class="stock-card-body"><span class="badge pilot-buy">Pilot Buy</span>
+            <div class="metric-grid"><div class="metric"><small>收盤／量</small><strong class="up">354.5／7,224張</strong></div><div class="metric"><small>MA5／20／60</small><strong>339.9／336.1／333.1</strong></div><div class="metric"><small>K／D</small><strong>71.41／57.07</strong></div><div class="metric"><small>5／10／20日</small><strong>+5.19%／+5.82%／+4.57%</strong></div></div>
+            <p><strong>量價與生命週期：</strong>收盤等於當日及20日高點354.5，量為20日均量5,902張的1.22倍，屬帶量突破初期；5／10／20日均勝加權指數。5／10／20日均量7,073／5,844／5,902張。</p>
+            <p><strong>籌碼：</strong>外資-957張連6賣；投信+912張連5買、自營商+198張連8買，三大+152張連2買，呈現內資承接外資。主力+1,881張、占量25.98%；融資-136張但借券+190張。</p>
+            <p><strong>支撐／壓力／失敗：</strong>確認點354.5；第一支撐350，突破失敗點344.5，硬支撐336.1。外資未止賣前不得升為Buy。</p>
+            <p><strong>Devil’s Advocate：</strong>推翻多方的最強證據是外資連6賣且借券增加；推翻空方的最強證據是價格創20日高、量能確認且融資下降。</p>
+          </div>
+        </article>
+        <article class="stock-card">
+          <div class="stock-card-head"><h3>6416 瑞祺電通</h3><div class="score">85</div></div>
+          <div class="stock-card-body"><span class="badge pilot-buy">Pilot Buy</span>
+            <div class="metric-grid"><div class="metric"><small>收盤／量</small><strong class="up">106.5／1,506張</strong></div><div class="metric"><small>MA5／20／60</small><strong>98.72／90.80／87.69</strong></div><div class="metric"><small>K／D</small><strong>58.70／50.22</strong></div><div class="metric"><small>5／10／20日</small><strong>+12.22%／+9.57%／+29.88%</strong></div></div>
+            <p><strong>量價與生命週期：</strong>三條均線多頭排列，量為20日均量1,042張的1.45倍，仍是四檔最強中期趨勢；但收盤未越過20日高109，屬主升段後的高檔確認。</p>
+            <p><strong>籌碼：</strong>外資由連4買轉-40張，三大由連4買轉-32張，主力-142張；融資由連6增轉減47張，借券僅+8張。籌碼由「過熱」轉為「降槓桿但法人轉弱」。</p>
+            <p><strong>支撐／壓力／失敗：</strong>壓力109；短支撐104.5，監控失敗點99.4，硬支撐MA5 98.72。突破109需同步看到外資恢復買超。</p>
+            <p><strong>Devil’s Advocate：</strong>推翻多方的是法人與主力同日轉賣；推翻空方的是融資開始下降且股價仍守所有均線。</p>
+          </div>
+        </article>
+        <article class="stock-card">
+          <div class="stock-card-head"><h3>3034 聯詠</h3><div class="score">78</div></div>
+          <div class="stock-card-body"><span class="badge hold">Hold</span>
+            <div class="metric-grid"><div class="metric"><small>收盤／量</small><strong class="up">503／4,290張</strong></div><div class="metric"><small>MA5／20／60</small><strong>479.7／508.9／490.8</strong></div><div class="metric"><small>K／D</small><strong>32.36／21.50</strong></div><div class="metric"><small>5／10／20日</small><strong>+6.68%／-7.54%／-7.37%</strong></div></div>
+            <p><strong>量價與生命週期：</strong>收盤高於MA5與MA60、KD黃金交叉擴大，但仍低於MA20；量僅20日均量5,948張的0.72倍，屬跌深修復後的MA20前確認。近5日勝指數，10／20日仍落後。</p>
+            <p><strong>籌碼：</strong>外資+1,164張連9買、三大+650張延續買超，投信-537張連7賣；主力+721張、占量16.8%。融資-88張、借券-362張，籌碼品質四檔最佳。</p>
+            <p><strong>支撐／壓力／失敗：</strong>壓力508.9；支撐495後看490.8，跌破490.8為本輪修復失敗，硬失敗451。收復MA20必須量達20日均量。</p>
+            <p><strong>Devil’s Advocate：</strong>推翻多方的是投信連賣且反彈無量；推翻空方的是外資長連買配合融資、借券同步下降。</p>
+          </div>
+        </article>
+        <article class="stock-card">
+          <div class="stock-card-head"><h3>2379 瑞昱</h3><div class="score">54</div></div>
+          <div class="stock-card-body"><span class="badge protect">Protect</span>
+            <div class="metric-grid"><div class="metric"><small>收盤／量</small><strong class="up">745／3,339張</strong></div><div class="metric"><small>MA5／20／60</small><strong>733.6／770.6／669.4</strong></div><div class="metric"><small>K／D</small><strong>30.15／21.21</strong></div><div class="metric"><small>5／10／20日</small><strong>+4.63%／-8.81%／-7.22%</strong></div></div>
+            <p><strong>量價與生命週期：</strong>站回MA5且KD向上，但仍低於MA20，量僅20日均量5,465張的0.61倍，屬弱勢反彈；近5日相對指數改善，10／20日仍為四檔最弱之一。</p>
+            <p><strong>籌碼：</strong>外資-903張連4賣、三大-562張連2賣；投信+349張連4買，形成明顯分歧。主力僅+61張、占量1.83%；融資-44張、借券-169張顯示去槓桿。</p>
+            <p><strong>支撐／壓力／失敗：</strong>壓力770.6；支撐726，硬失敗689。需量達5,465張、收復MA20且外資至少連2買，單日外資轉買不算翻多。</p>
+            <p><strong>Devil’s Advocate：</strong>推翻多方的是外資與三大賣壓延續；推翻空方的是融資、借券同步下降且KD轉強。</p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <h2>法人、主力與信用籌碼</h2>
+        <p>先看方向與連續性，再查精確買進／賣出；所有張數均為整數張</p>
+      </div>
+      <div class="chip-grid">
+        <article class="chip-card"><div class="chip-card-head"><h3>3034 聯詠</h3><span class="badge verified">7/23已驗證</span></div><div class="chip-card-body"><p class="chip-verdict">外資與三大續買、融資與借券同步下降；投信仍反向。</p><div class="flow-grid"><div class="flow-item"><span class="flow-label">外資</span><span class="flow-value">+1,164張</span><span class="flow-note">連9買</span></div><div class="flow-item"><span class="flow-label">投信</span><span class="flow-value">-537張</span><span class="flow-note">連7賣</span></div><div class="flow-item"><span class="flow-label">三大</span><span class="flow-value">+650張</span><span class="flow-note">連12買（Yahoo完整序列）</span></div></div><hr class="chip-divider"><div class="flow-grid"><div class="flow-item"><span class="flow-label">三大3日</span><span class="flow-value">+3,757</span></div><div class="flow-item"><span class="flow-label">三大5日</span><span class="flow-value">+4,892</span></div><div class="flow-item"><span class="flow-label">三大10日</span><span class="flow-value">+13,219</span></div></div><hr class="chip-divider"><div class="chip-foot"><div><span>Yahoo主力（7/23）</span><strong>+721張／+16.8%</strong></div><div><span>信用籌碼（TWSE 7/23）</span><strong>融資2,491（-88）；融券14（0）；借券31,656（-362）</strong></div></div><p class="sources">法人採TWSE官方；Yahoo同日整張值一致。</p></div></article><article class="chip-card"><div class="chip-card-head"><h3>2379 瑞昱</h3><span class="badge verified">7/23已驗證</span></div><div class="chip-card-body"><p class="chip-verdict">外資與三大續賣；投信承接但主力力道不足。</p><div class="flow-grid"><div class="flow-item"><span class="flow-label">外資</span><span class="flow-value">-903張</span><span class="flow-note">連4賣</span></div><div class="flow-item"><span class="flow-label">投信</span><span class="flow-value">+349張</span><span class="flow-note">連4買</span></div><div class="flow-item"><span class="flow-label">三大</span><span class="flow-value">-562張</span><span class="flow-note">連2賣</span></div></div><hr class="chip-divider"><div class="flow-grid"><div class="flow-item"><span class="flow-label">三大3日</span><span class="flow-value">-1,087</span></div><div class="flow-item"><span class="flow-label">三大5日</span><span class="flow-value">-314</span></div><div class="flow-item"><span class="flow-label">三大10日</span><span class="flow-value">-1,922</span></div></div><hr class="chip-divider"><div class="chip-foot"><div><span>Yahoo主力（7/23）</span><strong>+61張／+1.83%</strong></div><div><span>信用籌碼（TWSE 7/23）</span><strong>融資2,752（-44）；融券31（-1）；借券48,835（-169）</strong></div></div><p class="sources">Yahoo同日投信與三大分別+353／-558張，與TWSE相差4張；採TWSE官方。</p></div></article><article class="chip-card"><div class="chip-card-head"><h3>2376 技嘉</h3><span class="badge verified">7/23已驗證</span></div><div class="chip-card-body"><p class="chip-verdict">內資與主力強接外資賣壓，價格突破但法人仍分歧。</p><div class="flow-grid"><div class="flow-item"><span class="flow-label">外資</span><span class="flow-value">-957張</span><span class="flow-note">連6賣</span></div><div class="flow-item"><span class="flow-label">投信</span><span class="flow-value">+912張</span><span class="flow-note">連5買</span></div><div class="flow-item"><span class="flow-label">三大</span><span class="flow-value">+152張</span><span class="flow-note">連2買</span></div></div><hr class="chip-divider"><div class="flow-grid"><div class="flow-item"><span class="flow-label">三大3日</span><span class="flow-value">+194</span></div><div class="flow-item"><span class="flow-label">三大5日</span><span class="flow-value">-778</span></div><div class="flow-item"><span class="flow-label">三大10日</span><span class="flow-value">-994</span></div></div><hr class="chip-divider"><div class="chip-foot"><div><span>Yahoo主力（7/23）</span><strong>+1,881張／+25.98%</strong></div><div><span>信用籌碼（TWSE 7/23）</span><strong>融資7,117（-136）；融券492（+49）；借券57,514（+190）</strong></div></div><p class="sources">投信、自營商與主力偏多；外資與借券為反證。</p></div></article><article class="chip-card"><div class="chip-card-head"><h3>6416 瑞祺電通</h3><span class="badge verified">7/23已驗證</span></div><div class="chip-card-body"><p class="chip-verdict">融資降溫，但外資、三大與主力同日轉賣。</p><div class="flow-grid"><div class="flow-item"><span class="flow-label">外資</span><span class="flow-value">-40張</span><span class="flow-note">連4買→賣</span></div><div class="flow-item"><span class="flow-label">投信</span><span class="flow-value">0張</span><span class="flow-note">連71平（Yahoo）</span></div><div class="flow-item"><span class="flow-label">三大</span><span class="flow-value">-32張</span><span class="flow-note">連4買→賣</span></div></div><hr class="chip-divider"><div class="flow-grid"><div class="flow-item"><span class="flow-label">三大3日</span><span class="flow-value">+488</span></div><div class="flow-item"><span class="flow-label">三大5日</span><span class="flow-value">+616</span></div><div class="flow-item"><span class="flow-label">三大10日</span><span class="flow-value">+741</span></div></div><hr class="chip-divider"><div class="chip-foot"><div><span>Yahoo主力（7/23）</span><strong>-142張／-9.42%</strong></div><div><span>信用籌碼（TWSE 7/23）</span><strong>融資4,221（-47）；融券0（-2）；借券708（+8）</strong></div></div><p class="sources">公司名稱已核對為瑞祺電通；法人及主力日期均為7/23。</p></div></article>
+      </div>
+      <h3 class="audit-title">法人完整明細</h3>
+      <p class="sources">每檔獨立呈現；底層保留 TWSE 精確股數核算，分項四捨五入可能造成 1 張顯示差。</p>
+      <h3 class="audit-title">3034 聯詠</h3><div class="table-wrap"><table><thead><tr><th>類別</th><th>買進</th><th>賣出</th><th>當日</th><th>連續性</th><th>3日</th><th>5日</th><th>10日</th></tr></thead><tbody><tr><td>外資</td><td>2,968</td><td>1,804</td><td>+1,164</td><td>連9買</td><td>+5,517</td><td>+7,967</td><td>+17,196</td></tr><tr><td>投信</td><td>121</td><td>658</td><td>-537</td><td>連7賣</td><td>-1,886</td><td>-3,446</td><td>-2,766</td></tr><tr><td>自營商</td><td>143</td><td>120</td><td>+23</td><td>連3買</td><td>+126</td><td>+371</td><td>-1,211</td></tr><tr><td>三大法人</td><td>3,232</td><td>2,582</td><td>+650</td><td>連12買（Yahoo完整序列）</td><td>+3,757</td><td>+4,892</td><td>+13,219</td></tr></tbody></table></div><p class="sources">TWSE精確股數核算；Yahoo 2026/07/23整張值一致。</p><h3 class="audit-title">2379 瑞昱</h3><div class="table-wrap"><table><thead><tr><th>類別</th><th>買進</th><th>賣出</th><th>當日</th><th>連續性</th><th>3日</th><th>5日</th><th>10日</th></tr></thead><tbody><tr><td>外資</td><td>1,530</td><td>2,433</td><td>-903</td><td>連4賣</td><td>-1,935</td><td>-1,224</td><td>-3,111</td></tr><tr><td>投信</td><td>354</td><td>5</td><td>+349</td><td>連4買</td><td>+915</td><td>+632</td><td>+278</td></tr><tr><td>自營商</td><td>36</td><td>44</td><td>-8</td><td>連2賣</td><td>-67</td><td>+278</td><td>+910</td></tr><tr><td>三大法人</td><td>1,920</td><td>2,482</td><td>-562</td><td>連2賣</td><td>-1,087</td><td>-314</td><td>-1,922</td></tr></tbody></table></div><p class="sources">TWSE官方投信賣出5張、買賣超+349張、三大-562張；Yahoo顯示1／+353／-558張，差異4張，採TWSE。</p><h3 class="audit-title">2376 技嘉</h3><div class="table-wrap"><table><thead><tr><th>類別</th><th>買進</th><th>賣出</th><th>當日</th><th>連續性</th><th>3日</th><th>5日</th><th>10日</th></tr></thead><tbody><tr><td>外資</td><td>1,444</td><td>2,401</td><td>-957</td><td>連6賣</td><td>-2,759</td><td>-5,229</td><td>-5,354</td></tr><tr><td>投信</td><td>913</td><td>1</td><td>+912</td><td>連5買</td><td>+2,342</td><td>+3,342</td><td>+2,577</td></tr><tr><td>自營商</td><td>355</td><td>157</td><td>+198</td><td>連8買</td><td>+611</td><td>+1,108</td><td>+1,783</td></tr><tr><td>三大法人</td><td>2,711</td><td>2,560</td><td>+152</td><td>連2買</td><td>+194</td><td>-778</td><td>-994</td></tr></tbody></table></div><p class="sources">TWSE精確股數核算；Yahoo 2026/07/23整張值一致。</p><h3 class="audit-title">6416 瑞祺電通</h3><div class="table-wrap"><table><thead><tr><th>類別</th><th>買進</th><th>賣出</th><th>當日</th><th>連續性</th><th>3日</th><th>5日</th><th>10日</th></tr></thead><tbody><tr><td>外資</td><td>357</td><td>397</td><td>-40</td><td>連4買→賣</td><td>+483</td><td>+593</td><td>+694</td></tr><tr><td>投信</td><td>0</td><td>0</td><td>0</td><td>連71平（Yahoo）</td><td>0</td><td>0</td><td>0</td></tr><tr><td>自營商</td><td>11</td><td>3</td><td>+8</td><td>賣→買</td><td>+5</td><td>+22</td><td>+47</td></tr><tr><td>三大法人</td><td>368</td><td>400</td><td>-32</td><td>連4買→賣</td><td>+488</td><td>+616</td><td>+741</td></tr></tbody></table></div><p class="sources">TWSE精確股數核算；Yahoo 2026/07/23整張值一致。</p>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <h2>條件檢查</h2>
+        <p>假設目前空手：每檔均列價格、法人、量價三道進場門及失敗點</p>
+      </div>
+      <div class="table-wrap"><table>
+        <thead><tr><th>標的</th><th>價格結構門</th><th>法人連續門</th><th>量價確認門</th><th>空手候選</th><th>失敗點</th></tr></thead>
+        <tbody>
+          <tr><td>2376 技嘉</td><td><strong>達成</strong>：收盤354.5&gt;350且在三均線上</td><td><strong>未達</strong>：三大連2買，但外資連6賣</td><td><strong>達成</strong>：量7,224&gt;20日均量5,902且創20日高</td><td><span class="badge pilot-buy">Pilot Buy</span>；Buy受法人門否決</td><td>跌破344.5；硬失敗336.1</td></tr>
+          <tr><td>6416 瑞祺電通</td><td><strong>達成Pilot門</strong>：守MA5／20／60；Buy另需突破109</td><td><strong>未達</strong>：外資與三大由連買轉賣</td><td><strong>達成Pilot門</strong>：量1.45倍且未破104.5；突破門未過</td><td><span class="badge pilot-buy">Pilot Buy</span>；不得升Buy</td><td>99.4；硬失敗98.7</td></tr>
+          <tr><td>3034 聯詠</td><td><strong>未達</strong>：收盤503&lt;MA20 508.9</td><td><strong>達成</strong>：外資連9買、三大續買；投信為反證</td><td><strong>未達</strong>：量僅20日均量0.72倍</td><td><span class="badge hold">Hold</span>／Wait for proof</td><td>490.8；硬失敗451</td></tr>
+          <tr><td>2379 瑞昱</td><td><strong>未達</strong>：收盤745&lt;MA20 770.6</td><td><strong>未達</strong>：外資連4賣、三大連2賣</td><td><strong>未達</strong>：量僅20日均量0.61倍</td><td><span class="badge protect">Protect</span>／Wait for proof</td><td>726；硬失敗689</td></tr>
+        </tbody>
+      </table></div>
+      <div class="callout warning"><strong>空手紀律：</strong>2379不可只因單日外資轉買就翻多；至少需外資連2買、收復770.6且量達5,465張。2376目前只達Pilot Buy，因外資門未過，不得把價格突破解讀成完整Buy。</div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <h2>隔日 Playbook</h2>
+        <p>確認點、失敗點與下一個可驗證證據</p>
+      </div>
+      <div class="table-wrap"><table>
+        <thead><tr><th>標的</th><th>確認點</th><th>失敗點</th><th>觀察事項</th><th>客觀觸發條件</th></tr></thead>
+        <tbody>
+          <tr><td>2376 技嘉</td><td>收盤續站354.5或盤中回測350不破</td><td>344.5；硬失敗336.1</td><td>外資是否終止連6賣、借券是否續增</td><td>量≥5,902且外資轉買，才有升Buy的必要條件</td></tr>
+          <tr><td>6416 瑞祺電通</td><td>收盤突破109</td><td>99.4</td><td>外資／主力能否由賣轉買、融資是否維持降溫</td><td>突破109＋外資買超＋融資增減占量&lt;1%</td></tr>
+          <tr><td>3034 聯詠</td><td>收盤站上508.9</td><td>490.8</td><td>投信連賣是否終止、低量反彈能否補量</td><td>量≥5,948＋站上MA20＋三大續買</td></tr>
+          <tr><td>2379 瑞昱</td><td>收盤站上770.6</td><td>726；硬失敗689</td><td>外資連4賣是否真正反轉</td><td>外資至少連2買＋量≥5,465；單日轉買不算</td></tr>
+        </tbody>
+      </table></div>
+    </section>
+
+    <section class="section sources">
+      <h2>資料來源與稽核</h2>
+      <p><strong>證據姿態：</strong>行情、法人、融資融券、借券與主力日期均對齊2026-07-23，屬可供每日監控使用的研究級證據。市場敏感資料均標示日期；法人衝突不取平均，依官方來源優先。</p>
+      <div class="table-wrap"><table>
+        <thead><tr><th>項目</th><th>來源</th><th>資料日期</th><th>抓取時間</th><th>驗證狀態</th></tr></thead>
+        <tbody>
+          <tr><td>行情、量、MA、KD、近5／10／20日</td><td>本機 /api/kline/{stock}?limit=90</td><td>2026-07-23</td><td>20:48</td><td><span class="badge verified">已驗證</span> 四檔頁面HTTP 200</td></tr>
+          <tr><td>三大法人</td><td><a href="https://www.twse.com.tw/rwd/zh/fund/T86?date=20260723&amp;selectType=ALL&amp;response=json">TWSE T86</a></td><td>2026-07-23</td><td>20:50–20:54</td><td><span class="badge verified">官方定稿</span> 四檔算術一致</td></tr>
+          <tr><td>法人第二來源</td><td>Yahoo法人買賣實際渲染頁</td><td>2026-07-23</td><td>20:55</td><td>3034／2376／6416一致；2379相差4張，採TWSE</td></tr>
+          <tr><td>融資融券</td><td><a href="https://www.twse.com.tw/rwd/zh/marginTrading/MI_MARGN?date=20260723&amp;selectType=STOCK&amp;response=json">TWSE MI_MARGN</a></td><td>2026-07-23</td><td>20:51</td><td><span class="badge verified">官方已取得</span></td></tr>
+          <tr><td>借券賣出餘額</td><td><a href="https://www.twse.com.tw/rwd/zh/marginTrading/TWT93U?date=20260723&amp;response=json">TWSE TWT93U</a></td><td>2026-07-23</td><td>20:51</td><td><span class="badge verified">官方已取得</span></td></tr>
+          <tr><td>主力分點</td><td>Yahoo主力進出實際渲染頁</td><td>2026-07-23</td><td>20:56</td><td><span class="badge verified">日期已核對</span> 僅作輔助</td></tr>
+          <tr><td>Yahoo資券交叉檢查</td><td>Yahoo資券變化實際渲染頁</td><td>2026-07-22</td><td>20:57</td><td><span class="badge provisional">較官方落後1日</span> 不用於7/23數值</td></tr>
+          <tr><td>加權指數</td><td><a href="https://www.twse.com.tw/rwd/zh/afterTrading/FMTQIK?date=20260723&amp;response=json">TWSE FMTQIK</a></td><td>2026-07-23</td><td>20:52</td><td><span class="badge verified">已驗證</span></td></tr>
+        </tbody>
+      </table></div>
+      <p><strong>來源衝突：</strong>2379 Yahoo顯示投信買進354／賣出1／買賣超+353張、三大-558張；TWSE精確股數為354,011／5,264／+348,747股、三大-561,812股，報告各自四捨五入為+349與-562張。差異已保留，未覆蓋或平均。</p>
+      <p><strong>資料缺口：</strong>無關鍵日期缺口。Yahoo資券頁仍停在7/22，但TWSE 7/23官方資料已取得，因此不構成決策阻塞。</p>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <h2>SAM 監控分數算法</h2>
+        <p>固定揭露權重、分項得分、Traffic Light 門檻與硬性覆寫規則</p>
+      </div>
+      <p>SAM v1.0＝技術結構25＋法人與主力連續性25＋量價確認15＋相對強弱15＋觸發器／失敗點品質10＋資料品質10。它是監控啟發式，不是估值或預期報酬模型。</p>
+      <div class="table-wrap"><table>
+        <thead><tr><th>標的</th><th>技術25</th><th>法人25</th><th>量價15</th><th>相對15</th><th>觸發10</th><th>資料10</th><th>合計</th><th>原始／最終</th></tr></thead>
+        <tbody>
+          <tr><td>2376 技嘉</td><td>25</td><td>16</td><td>15</td><td>15</td><td>9</td><td>10</td><td><strong>90</strong></td><td>Buy／<span class="badge pilot-buy">Pilot Buy</span>：法人門未過</td></tr>
+          <tr><td>6416 瑞祺電通</td><td>24</td><td>14</td><td>14</td><td>15</td><td>8</td><td>10</td><td><strong>85</strong></td><td>Buy／<span class="badge pilot-buy">Pilot Buy</span>：109與法人門未過</td></tr>
+          <tr><td>3034 聯詠</td><td>18</td><td>23</td><td>8</td><td>10</td><td>9</td><td>10</td><td><strong>78</strong></td><td>Pilot Buy／<span class="badge hold">Hold</span>：價格門未過</td></tr>
+          <tr><td>2379 瑞昱</td><td>15</td><td>7</td><td>5</td><td>7</td><td>10</td><td>10</td><td><strong>54</strong></td><td><span class="badge protect">Protect</span></td></tr>
+        </tbody>
+      </table></div>
+      <div class="callout"><strong>門檻：</strong>85–100 Buy、75–84 Pilot Buy、65–74 Hold、50–64 Protect、35–49 Reduce、0–34 Exit。空手Pilot Buy要求價格門通過，且法人或量價至少再過一門；Buy要求三門全過。失敗點跌破、或關鍵資料日期未對齊，均觸發硬性降級。</div>
+      <div class="callout warning"><strong>今日覆寫：</strong>2376與6416分數落在Buy，但法人門／完整突破門未全過，降為Pilot Buy；3034分數落在Pilot Buy，但未收復MA20且量能不足，降為Hold。2379維持Protect。</div>
+    </section>
+
+    <footer class="footer">
+      本報告用於投資檢討與監控，不構成下單指示，也不保證獲利。<br>
+      本報告資料凍結於2026-07-23晚間；Email、Pages與LINE於HTML QA通過後分別執行，結果以任務回覆及排程記憶為準。
+    </footer>
+  </main>
+</body>
+</html>
+
+
