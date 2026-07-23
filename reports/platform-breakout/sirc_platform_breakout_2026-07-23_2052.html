@@ -1,0 +1,200 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>【每日平台突破報告】2026-07-23</title>
+  <style>
+    :root { --ink:#172033; --muted:#5f6b7b; --line:#dbe2ea; --bg:#f4f7fb; --card:#fff; --navy:#15355b; --blue:#2369b2; --amber:#a46200; --amber-bg:#fff5df; --gray-bg:#eef2f6; }
+    * { box-sizing:border-box; }
+    html,body { margin:0; max-width:100%; background:var(--bg); color:var(--ink); font-family:"Microsoft JhengHei","Noto Sans TC",Arial,sans-serif; line-height:1.55; }
+    main { max-width:1180px; margin:0 auto; padding:34px 22px 54px; }
+    .hero { background:linear-gradient(120deg,#102d4d,#2369b2); color:#fff; border-radius:16px; padding:28px 30px; box-shadow:0 10px 28px #15355b30; }
+    h1 { margin:0 0 5px; font-size:clamp(1.6rem,3.6vw,2.3rem); }
+    h2 { font-size:1.25rem; margin:30px 0 12px; color:var(--navy); }
+    .sub { margin:0; opacity:.88; }
+    .meta { display:flex; flex-wrap:wrap; gap:9px; margin-top:18px; }
+    .meta span { padding:5px 10px; border:1px solid #ffffff55; border-radius:99px; font-size:.88rem; }
+    .grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:14px; margin:18px 0; }
+    .card { background:var(--card); border:1px solid var(--line); border-radius:12px; padding:17px; box-shadow:0 2px 8px #17203308; }
+    .label { color:var(--muted); font-size:.87rem; }
+    .value { font-size:1.65rem; font-weight:800; color:var(--navy); margin-top:2px; }
+    .callout { border-left:4px solid var(--amber); background:var(--amber-bg); border-radius:8px; padding:14px 16px; }
+    .table-wrap { overflow-x:auto; border:1px solid var(--line); border-radius:12px; background:#fff; }
+    table { width:100%; border-collapse:collapse; min-width:1010px; }
+    th,td { padding:11px 10px; text-align:left; vertical-align:top; border-bottom:1px solid var(--line); font-size:.9rem; }
+    th { background:#eaf1f8; color:#213f5e; white-space:nowrap; }
+    tr:last-child td { border-bottom:0; }
+    .rank { font-weight:800; color:var(--blue); }
+    .stock-link { color:var(--blue); text-decoration:underline; text-decoration-thickness:1px; text-underline-offset:3px; }
+    .stock-link:hover,.stock-link:focus-visible { color:var(--navy); }
+    .gray { display:inline-block; color:#45505e; background:var(--gray-bg); padding:2px 7px; border-radius:999px; font-size:.8rem; white-space:nowrap; }
+    .priority { font-weight:700; }
+    .up { color:#b42318; font-weight:700; }
+    .down { color:#067647; font-weight:700; }
+    .flat { color:#667085; font-weight:700; }
+    .institution td:first-child { background:#f8fafc; }
+    .chip-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(340px,1fr)); gap:14px; }
+    .chip-card { overflow:hidden; border:1px solid var(--line); border-radius:16px; background:#fff; box-shadow:0 2px 8px #17203308; }
+    .chip-card-head { display:flex; align-items:center; justify-content:space-between; gap:12px; padding:13px 15px; color:#fff; background:var(--navy); }
+    .chip-card-head h3 { margin:0; font-size:1.06rem; }
+    .chip-card-head .stock-link { color:#fff; }
+    .chip-card-head .stock-link:hover,.chip-card-head .stock-link:focus-visible { color:#dcecff; }
+    .chip-card-body { padding:14px 15px; }
+    .flow-badge { display:inline-block; padding:3px 9px; border-radius:999px; font-size:.76rem; font-weight:800; white-space:nowrap; }
+    .flow-badge.positive { color:#087f5b; background:#dff4ea; }
+    .flow-badge.mixed { color:#965a00; background:#fff0d3; }
+    .flow-badge.negative { color:#667085; background:#f1f3f5; }
+    .chip-verdict { margin:0 0 12px; padding:10px 12px; border-radius:10px; background:#f6f8fb; font-weight:700; }
+    .flow-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:8px; }
+    .flow-item { min-width:0; padding:9px; border:1px solid var(--line); border-radius:10px; background:#fff; }
+    .flow-label { display:block; color:var(--muted); font-size:.72rem; }
+    .flow-value { display:block; font-size:1rem; font-weight:800; font-variant-numeric:tabular-nums; }
+    .flow-note { display:block; color:var(--muted); font-size:.72rem; }
+    .chip-divider { margin:13px 0; border:0; border-top:1px solid var(--line); }
+    .chip-foot { display:grid; grid-template-columns:1fr 1fr; gap:10px; color:var(--muted); font-size:.76rem; }
+    .chip-foot strong { display:block; color:var(--ink); font-size:.88rem; }
+    .detail-title { margin:22px 0 8px; color:var(--navy); }
+    ul { padding-left:1.25rem; }
+    .foot { margin-top:25px; color:var(--muted); font-size:.88rem; }
+    .source { background:#fff; border:1px solid var(--line); border-radius:12px; padding:16px; color:var(--muted); font-size:.9rem; }
+    .source a { color:var(--blue); }
+    @media (max-width:720px) {
+      html,body { overflow-x:hidden; }
+      main { width:100%; min-width:0; padding:18px 13px 38px; }
+      .hero,.grid,.card,.callout,.source,.table-wrap,.chip-card { max-width:100%; min-width:0; }
+      .hero { padding:22px 19px; }
+      .grid,.chip-grid { grid-template-columns:minmax(0,1fr); }
+      .flow-grid { grid-template-columns:repeat(3,minmax(74px,1fr)); }
+      .chip-foot { grid-template-columns:1fr; }
+      .sub,.card,.callout,.source,.chip-verdict { overflow-wrap:anywhere; }
+      .table-wrap { overflow-x:auto; -webkit-overflow-scrolling:touch; }
+    }
+  </style>
+</head>
+<body>
+<main>
+  <section class="hero">
+    <h1>【每日平台突破報告】</h1>
+    <p class="sub">SIRC 平台整理突破監控｜研究優先名單，不構成買賣建議或獲利保證。</p>
+    <div class="meta"><span>市場／法人資料日：2026-07-23</span><span>執行時間：2026-07-23 20:52（Asia/Taipei）</span><span>查詢模式：首突破</span><span>服務／查詢：HTTP 200</span></div>
+  </section>
+
+  <section class="grid" aria-label="摘要">
+    <div class="card"><div class="label">符合平台突破條件</div><div class="value">5 檔</div><div>當日完整篩選結果</div></div>
+    <div class="card"><div class="label">最值得先看</div><div class="value">2027</div><div>大成鋼：法人 3 日 +34,278 張、連 3 買</div></div>
+    <div class="card"><div class="label">法人資料狀態</div><div class="value">5／5</div><div>4 檔 TWSE、1 檔 TPEx；近 10 個交易日已補齊</div></div>
+  </section>
+
+  <section class="callout"><strong>監控結論：</strong>2027 大成鋼的法人延續性最完整，外資、投信、自營商與三大合計皆連 3 買，三大近 10 日累計 +52,381 張，列為第一優先。3373 熱映距 60 日高僅 0.3%、量比 34.34 倍，但今日三大轉賣且基礎量小，只適合觀察後續承接。5871 中租-KY 投信連 10 買、近 5／10 日籌碼仍偏多，但外資連 2 賣且今日股價回落。完整 SAM 仍缺主力、基準相對強弱與正式驗證欄位，因此不產生虛構總分或燈號。</section>
+
+  <h2>依注意優先級排序</h2>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>優先</th><th>標的</th><th>關鍵技術／量能數據</th><th>SAM／Traffic Light</th><th>入選原因與主要風險</th><th>後續觀察點</th></tr></thead>
+      <tbody>
+        <tr><td class="rank">1｜最值得注意</td><td><strong><a class="stock-link" href="http://localhost:8080/kline/2027" target="_blank" rel="noopener">2027 大成鋼</a></strong><br>收盤 44.40</td><td>60日高／低：44.75／35.90<br>量 26,041 張；5/20量比 1.20；量比 1.62<br>MA5／20／60：42.08／40.91／41.00<br>突破比 0.9922；K/D 79.57／76.88</td><td><span class="gray">SAM：未評估</span><br><span class="gray">灰燈：資料缺口</span></td><td><span class="priority">距前高僅 0.8%；四類法人皆連 3 買，三大近 3 日 +34,278 張。</span><br>風險：K/D 偏高，MA20 仍略低於 MA60，短線追價波動加大。</td><td>確認帶量突破 44.75 且三大維持買超；若跌回 42 附近、法人轉賣，降低優先度。</td></tr>
+        <tr><td class="rank">2</td><td><strong><a class="stock-link" href="http://localhost:8080/kline/3373" target="_blank" rel="noopener">3373 熱映</a></strong><br>收盤 17.75</td><td>60日高／低：17.80／16.10<br>量 2,562 張；5/20量比 1.30；量比 34.34<br>MA5／20／60：16.74／16.62／16.77<br>突破比 0.9972；K/D 43.97／39.72</td><td><span class="gray">SAM：未評估</span><br><span class="gray">灰燈：資料缺口</span></td><td><span class="priority">距前高僅 0.3%，今日上漲 6.29%，量能急增。</span><br>風險：20 日均量僅約 75 張，今日三大 -8 張，極端量比容易失真。</td><td>確認 17.80 突破後仍有承接，且三大重新轉買；量縮跌回平台則視為假突破。</td></tr>
+        <tr><td class="rank">3</td><td><strong><a class="stock-link" href="http://localhost:8080/kline/5871" target="_blank" rel="noopener">5871 中租-KY</a></strong><br>收盤 120.50</td><td>60日高／低：124.50／106.00<br>量 13,453 張；5/20量比 1.43；量比 1.55<br>MA5／20／60：121.80／117.53／114.95<br>突破比 0.9679；K/D 88.77／89.66</td><td><span class="gray">SAM：未評估</span><br><span class="gray">灰燈：資料缺口</span></td><td><span class="priority">投信今日 +3,017 張、連 10 買；三大近 10 日仍 +26,910 張。</span><br>風險：外資連 2 賣、三大今日 -405 張，股價 -2.03% 且 K/D 高檔。</td><td>等待外資止賣、股價重回 121.8 並挑戰 124.5；投信續買但價格不漲時要提高警戒。</td></tr>
+        <tr><td class="rank">4</td><td><strong><a class="stock-link" href="http://localhost:8080/kline/1732" target="_blank" rel="noopener">1732 毛寶</a></strong><br>收盤 27.60</td><td>60日高／低：28.05／25.20<br>量 3,097 張；5/20量比 1.72；量比 12.89<br>MA5／20／60：26.79／26.50／26.41<br>突破比 0.9840；K/D 54.04／53.69</td><td><span class="gray">SAM：未評估</span><br><span class="gray">灰燈：資料缺口</span></td><td><span class="priority">距前高 1.6%，均線結構向上，今日量能明顯放大。</span><br>風險：三大今日 -329 張、近 3 日 -11 張，法人未同步確認。</td><td>觀察突破 28.05 後能否守穩，並等待外資與三大由賣轉買。</td></tr>
+        <tr><td class="rank">5</td><td><strong><a class="stock-link" href="http://localhost:8080/kline/9919" target="_blank" rel="noopener">9919 康那香</a></strong><br>收盤 14.70</td><td>60日高／低：15.30／13.50<br>量 7,240 張；5/20量比 2.01；量比 11.70<br>MA5／20／60：14.19／13.92／14.10<br>突破比 0.9608；K/D 53.49／53.26</td><td><span class="gray">SAM：未評估</span><br><span class="gray">灰燈：資料缺口</span></td><td><span class="priority">量能急增且 5 日均量為 20 日均量 2.01 倍。</span><br>風險：距前高仍 3.9%，三大今日 -1,119 張，近 3／5／10 日皆負。</td><td>等待法人賣壓明顯收斂，並放量突破 15.30；否則維持最低優先。</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h2>三大法人今日與近期買賣超</h2>
+  <div class="source" style="margin-bottom:12px"><strong>單位：張；資料日：2026-07-23。</strong>9919、1732、5871、2027 取自 TWSE T86；3373 為上櫃股，改取 TPEx 三大法人日報。累計採最近 10 個實際交易日：7/23、7/22、7/21、7/20、7/17、7/16、7/15、7/14、7/13、7/9。上櫃股不以 T86 缺值代替 0，而是使用 TPEx 對應資料。</div>
+  <div class="chip-grid" aria-label="三大法人卡片摘要">
+    <article class="chip-card">
+      <div class="chip-card-head"><h3><a class="stock-link" href="http://localhost:8080/kline/2027" target="_blank" rel="noopener">2027 大成鋼</a></h3><span class="flow-badge positive">TWSE｜法人同向</span></div>
+      <div class="chip-card-body">
+        <p class="chip-verdict">外資、投信、自營商同步連 3 買；三大近 10 日累計居五檔之首。</p>
+        <div class="flow-grid"><div class="flow-item"><span class="flow-label">外資今日</span><strong class="flow-value up">+454</strong><span class="flow-note">連3買</span></div><div class="flow-item"><span class="flow-label">投信今日</span><strong class="flow-value up">+19</strong><span class="flow-note">連3買</span></div><div class="flow-item"><span class="flow-label">三大今日</span><strong class="flow-value up">+570</strong><span class="flow-note">連3買</span></div></div>
+        <hr class="chip-divider"><div class="flow-grid"><div class="flow-item"><span class="flow-label">三大 3 日</span><strong class="flow-value up">+34,278</strong></div><div class="flow-item"><span class="flow-label">三大 5 日</span><strong class="flow-value up">+39,447</strong></div><div class="flow-item"><span class="flow-label">三大 10 日</span><strong class="flow-value up">+52,381</strong></div></div>
+        <hr class="chip-divider"><div class="chip-foot"><div>自營商今日<strong class="up">+97 張｜連3買</strong></div><div>判讀重點<strong>法人延續性最完整</strong></div></div>
+      </div>
+    </article>
+    <article class="chip-card">
+      <div class="chip-card-head"><h3><a class="stock-link" href="http://localhost:8080/kline/3373" target="_blank" rel="noopener">3373 熱映</a></h3><span class="flow-badge mixed">TPEx｜短線轉賣</span></div>
+      <div class="chip-card-body">
+        <p class="chip-verdict">今日外資轉賣、自營商買超；近 3／5／10 日合計仍小幅為正。</p>
+        <div class="flow-grid"><div class="flow-item"><span class="flow-label">外資今日</span><strong class="flow-value down">-26</strong><span class="flow-note">連1賣</span></div><div class="flow-item"><span class="flow-label">投信今日</span><strong class="flow-value flat">0</strong><span class="flow-note">連10平</span></div><div class="flow-item"><span class="flow-label">三大今日</span><strong class="flow-value down">-8</strong><span class="flow-note">連1賣</span></div></div>
+        <hr class="chip-divider"><div class="flow-grid"><div class="flow-item"><span class="flow-label">三大 3 日</span><strong class="flow-value up">+58</strong></div><div class="flow-item"><span class="flow-label">三大 5 日</span><strong class="flow-value up">+71</strong></div><div class="flow-item"><span class="flow-label">三大 10 日</span><strong class="flow-value up">+50</strong></div></div>
+        <hr class="chip-divider"><div class="chip-foot"><div>自營商今日<strong class="up">+18 張｜連1買</strong></div><div>判讀重點<strong>爆量未獲法人同步確認</strong></div></div>
+      </div>
+    </article>
+    <article class="chip-card">
+      <div class="chip-card-head"><h3><a class="stock-link" href="http://localhost:8080/kline/5871" target="_blank" rel="noopener">5871 中租-KY</a></h3><span class="flow-badge mixed">TWSE｜投信主導</span></div>
+      <div class="chip-card-body">
+        <p class="chip-verdict">投信連 10 買、今日 +3,017 張；外資連 2 賣使三大今日轉負。</p>
+        <div class="flow-grid"><div class="flow-item"><span class="flow-label">外資今日</span><strong class="flow-value down">-3,248</strong><span class="flow-note">連2賣</span></div><div class="flow-item"><span class="flow-label">投信今日</span><strong class="flow-value up">+3,017</strong><span class="flow-note">連10買</span></div><div class="flow-item"><span class="flow-label">三大今日</span><strong class="flow-value down">-405</strong><span class="flow-note">連1賣</span></div></div>
+        <hr class="chip-divider"><div class="flow-grid"><div class="flow-item"><span class="flow-label">三大 3 日</span><strong class="flow-value up">+7,390</strong></div><div class="flow-item"><span class="flow-label">三大 5 日</span><strong class="flow-value up">+18,572</strong></div><div class="flow-item"><span class="flow-label">三大 10 日</span><strong class="flow-value up">+26,910</strong></div></div>
+        <hr class="chip-divider"><div class="chip-foot"><div>自營商今日<strong class="down">-173 張｜連2賣</strong></div><div>判讀重點<strong>投信承接、外資壓制</strong></div></div>
+      </div>
+    </article>
+    <article class="chip-card">
+      <div class="chip-card-head"><h3><a class="stock-link" href="http://localhost:8080/kline/1732" target="_blank" rel="noopener">1732 毛寶</a></h3><span class="flow-badge negative">TWSE｜法人未確認</span></div>
+      <div class="chip-card-body">
+        <p class="chip-verdict">外資今日賣超，三大近 3 日轉負；放量突破仍缺法人同向。</p>
+        <div class="flow-grid"><div class="flow-item"><span class="flow-label">外資今日</span><strong class="flow-value down">-329</strong><span class="flow-note">連1賣</span></div><div class="flow-item"><span class="flow-label">投信今日</span><strong class="flow-value flat">0</strong><span class="flow-note">連10平</span></div><div class="flow-item"><span class="flow-label">三大今日</span><strong class="flow-value down">-329</strong><span class="flow-note">連1賣</span></div></div>
+        <hr class="chip-divider"><div class="flow-grid"><div class="flow-item"><span class="flow-label">三大 3 日</span><strong class="flow-value down">-11</strong></div><div class="flow-item"><span class="flow-label">三大 5 日</span><strong class="flow-value up">+63</strong></div><div class="flow-item"><span class="flow-label">三大 10 日</span><strong class="flow-value up">+81</strong></div></div>
+        <hr class="chip-divider"><div class="chip-foot"><div>自營商今日<strong class="flat">0 張｜連1買</strong></div><div>判讀重點<strong>短線籌碼轉弱</strong></div></div>
+      </div>
+    </article>
+    <article class="chip-card">
+      <div class="chip-card-head"><h3><a class="stock-link" href="http://localhost:8080/kline/9919" target="_blank" rel="noopener">9919 康那香</a></h3><span class="flow-badge negative">TWSE｜外資賣壓</span></div>
+      <div class="chip-card-body">
+        <p class="chip-verdict">外資今日大幅賣超；三大今日與近 3／5／10 日累計皆為負。</p>
+        <div class="flow-grid"><div class="flow-item"><span class="flow-label">外資今日</span><strong class="flow-value down">-1,119</strong><span class="flow-note">連1賣</span></div><div class="flow-item"><span class="flow-label">投信今日</span><strong class="flow-value flat">0</strong><span class="flow-note">連10平</span></div><div class="flow-item"><span class="flow-label">三大今日</span><strong class="flow-value down">-1,119</strong><span class="flow-note">連1賣</span></div></div>
+        <hr class="chip-divider"><div class="flow-grid"><div class="flow-item"><span class="flow-label">三大 3 日</span><strong class="flow-value down">-114</strong></div><div class="flow-item"><span class="flow-label">三大 5 日</span><strong class="flow-value down">-483</strong></div><div class="flow-item"><span class="flow-label">三大 10 日</span><strong class="flow-value down">-115</strong></div></div>
+        <hr class="chip-divider"><div class="chip-foot"><div>自營商今日<strong class="flat">0 張｜連1買</strong></div><div>判讀重點<strong>量增但法人反向</strong></div></div>
+      </div>
+    </article>
+  </div>
+
+  <h3 class="detail-title">完整法人稽核明細</h3>
+  <div class="table-wrap">
+    <table class="institution">
+      <thead><tr><th>標的／來源</th><th>法人</th><th>今日買進</th><th>今日賣出</th><th>今日買賣超</th><th>近3日</th><th>近5日</th><th>近10日</th><th>連續性</th></tr></thead>
+      <tbody>
+        <tr><td rowspan="4"><a class="stock-link" href="http://localhost:8080/kline/2027" target="_blank" rel="noopener">2027 大成鋼</a><br>TWSE T86</td><td>外資</td><td>8,820</td><td>8,366</td><td class="up">+454</td><td class="up">+28,505</td><td class="up">+31,159</td><td class="up">+41,003</td><td>連3買</td></tr>
+        <tr><td>投信</td><td>35</td><td>16</td><td class="up">+19</td><td class="up">+4,280</td><td class="up">+5,464</td><td class="up">+7,759</td><td>連3買</td></tr>
+        <tr><td>自營商</td><td>874</td><td>777</td><td class="up">+97</td><td class="up">+1,493</td><td class="up">+2,825</td><td class="up">+3,619</td><td>連3買</td></tr>
+        <tr><td><strong>三大合計</strong></td><td>9,728</td><td>9,158</td><td class="up">+570</td><td class="up">+34,278</td><td class="up">+39,447</td><td class="up">+52,381</td><td>連3買</td></tr>
+
+        <tr><td rowspan="4"><a class="stock-link" href="http://localhost:8080/kline/3373" target="_blank" rel="noopener">3373 熱映</a><br>TPEx</td><td>外資</td><td>204</td><td>230</td><td class="down">-26</td><td class="up">+41</td><td class="up">+53</td><td class="up">+32</td><td>連1賣</td></tr>
+        <tr><td>投信</td><td>0</td><td>0</td><td class="flat">0</td><td class="flat">0</td><td class="flat">0</td><td class="flat">0</td><td>連10平</td></tr>
+        <tr><td>自營商</td><td>31</td><td>13</td><td class="up">+18</td><td class="up">+17</td><td class="up">+18</td><td class="up">+18</td><td>連1買</td></tr>
+        <tr><td><strong>三大合計</strong></td><td>235</td><td>243</td><td class="down">-8</td><td class="up">+58</td><td class="up">+71</td><td class="up">+50</td><td>連1賣</td></tr>
+
+        <tr><td rowspan="4"><a class="stock-link" href="http://localhost:8080/kline/5871" target="_blank" rel="noopener">5871 中租-KY</a><br>TWSE T86</td><td>外資</td><td>4,258</td><td>7,507</td><td class="down">-3,248</td><td class="down">-1,105</td><td class="up">+3,084</td><td class="up">+8,598</td><td>連2賣</td></tr>
+        <tr><td>投信</td><td>3,019</td><td>2</td><td class="up">+3,017</td><td class="up">+8,728</td><td class="up">+15,150</td><td class="up">+17,050</td><td>連10買</td></tr>
+        <tr><td>自營商</td><td>55</td><td>228</td><td class="down">-173</td><td class="down">-234</td><td class="up">+338</td><td class="up">+1,262</td><td>連2賣</td></tr>
+        <tr><td><strong>三大合計</strong></td><td>7,332</td><td>7,737</td><td class="down">-405</td><td class="up">+7,390</td><td class="up">+18,572</td><td class="up">+26,910</td><td>連1賣</td></tr>
+
+        <tr><td rowspan="4"><a class="stock-link" href="http://localhost:8080/kline/1732" target="_blank" rel="noopener">1732 毛寶</a><br>TWSE T86</td><td>外資</td><td>434</td><td>763</td><td class="down">-329</td><td class="down">-9</td><td class="up">+63</td><td class="up">+74</td><td>連1賣</td></tr>
+        <tr><td>投信</td><td>0</td><td>0</td><td class="flat">0</td><td class="flat">0</td><td class="flat">0</td><td class="flat">0</td><td>連10平</td></tr>
+        <tr><td>自營商</td><td>1</td><td>1</td><td class="flat">0</td><td class="down">-2</td><td class="flat">0</td><td class="up">+7</td><td>連1買</td></tr>
+        <tr><td><strong>三大合計</strong></td><td>435</td><td>764</td><td class="down">-329</td><td class="down">-11</td><td class="up">+63</td><td class="up">+81</td><td>連1賣</td></tr>
+
+        <tr><td rowspan="4"><a class="stock-link" href="http://localhost:8080/kline/9919" target="_blank" rel="noopener">9919 康那香</a><br>TWSE T86</td><td>外資</td><td>1,316</td><td>2,435</td><td class="down">-1,119</td><td class="down">-107</td><td class="down">-504</td><td class="down">-143</td><td>連1賣</td></tr>
+        <tr><td>投信</td><td>0</td><td>0</td><td class="flat">0</td><td class="flat">0</td><td class="flat">0</td><td class="flat">0</td><td>連10平</td></tr>
+        <tr><td>自營商</td><td>3</td><td>3</td><td class="flat">0</td><td class="down">-7</td><td class="up">+21</td><td class="up">+28</td><td>連1買</td></tr>
+        <tr><td><strong>三大合計</strong></td><td>1,319</td><td>2,438</td><td class="down">-1,119</td><td class="down">-114</td><td class="down">-483</td><td class="down">-115</td><td>連1賣</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h2>方法、資料缺口與風險</h2>
+  <div class="source">
+    <ul>
+      <li>平台篩選固定條件：首突破；60 日箱體幅度 ≤ 45%、20 日箱體幅度 ≤ 30%、突破比 ≥ 0.960、成交量 ≥ 2,000 張、量比 ≥ 1.30、5／20 日均量比 ≥ 1.00、MA20／MA60 ≥ 0.980、MA20 趨勢比 ≥ 0.980。</li>
+      <li>法人資料：上市股採 <a href="https://www.twse.com.tw/rwd/zh/fund/T86?date=20260723&amp;selectType=ALL&amp;response=html" target="_blank" rel="noopener">TWSE T86</a>；上櫃 3373 採 <a href="https://www.tpex.org.tw/zh-tw/mainboard/trading/major-institutional/detail/week.html" target="_blank" rel="noopener">TPEx 三大法人</a>。買賣超由官方股數換算為張並四捨五入，個別加總可能因四捨五入有 1 張差異。</li>
+      <li>排序屬研究優先判讀：綜合距前高、量能、均線、K/D 與法人方向，不等於預測報酬。低基礎量股票的極端量比需特別防範流動性與假突破風險。</li>
+      <li>完整 SAM／Traffic Light 所需的主力行為、基準相對強弱、正式觸發與驗證欄位未齊，因此全數維持「未評估／灰燈」，不以缺值推導分數。</li>
+    </ul>
+  </div>
+  <p class="foot">本報告為每日量價與法人資料的監控摘要，僅供研究使用；實際決策仍應結合個人風險承受度、公司基本面與後續價格確認。</p>
+</main>
+</body>
+</html>
