@@ -1,0 +1,447 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>核心持股每日籌碼技術報告</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --ink: #132238;
+      --muted: #66758a;
+      --paper: #f3f6fa;
+      --card: #ffffff;
+      --line: #dbe3ed;
+      --navy: #102d4f;
+      --blue: #2463a7;
+      --green: #087f5b;
+      --amber: #b86800;
+      --red: #c63d47;
+      --shadow: 0 10px 28px rgba(24, 47, 76, .08);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      background: var(--paper);
+      color: var(--ink);
+      font-family: "Noto Sans TC", "Microsoft JhengHei", Arial, sans-serif;
+      font-size: 15px;
+      line-height: 1.65;
+    }
+
+    .page {
+      width: min(1080px, calc(100% - 28px));
+      margin: 22px auto 40px;
+    }
+
+    .hero {
+      padding: 28px;
+      border-radius: 22px;
+      color: #fff;
+      background: linear-gradient(135deg, #0c2745 0%, #174f82 72%, #2f77b7 100%);
+      box-shadow: var(--shadow);
+    }
+
+    .eyebrow {
+      margin: 0 0 6px;
+      color: #cfe5fa;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+    }
+
+    h1, h2, h3, p { margin-top: 0; }
+    h1 { margin-bottom: 8px; font-size: clamp(25px, 4vw, 38px); line-height: 1.2; }
+    h2 { margin-bottom: 14px; font-size: 21px; }
+    h3 { margin-bottom: 8px; font-size: 18px; }
+
+    .meta { margin: 0; color: #d9e8f6; font-size: 13px; }
+
+    .hero-grid,
+    .stock-grid,
+    .metric-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+      gap: 14px;
+    }
+
+    .hero-grid { margin-top: 22px; }
+
+    .hero-card {
+      padding: 14px 16px;
+      border: 1px solid rgba(255,255,255,.18);
+      border-radius: 14px;
+      background: rgba(255,255,255,.10);
+    }
+
+    .hero-card small { display: block; color: #cfe5fa; }
+    .hero-card strong { display: block; margin-top: 3px; font-size: 18px; }
+
+    .section {
+      margin-top: 18px;
+      padding: 22px;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      background: var(--card);
+      box-shadow: var(--shadow);
+    }
+
+    .section-head {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 14px;
+      margin-bottom: 14px;
+    }
+
+    .section-head p { margin: 0; color: var(--muted); font-size: 13px; }
+
+    .stock-card {
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      background: #fff;
+    }
+
+    .stock-card-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 16px;
+      color: #fff;
+      background: var(--navy);
+    }
+
+    .stock-card-head h3 { margin: 0; }
+    .stock-card-body { padding: 16px; }
+
+    .score {
+      min-width: 54px;
+      text-align: center;
+      font-size: 20px;
+      font-weight: 800;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 3px 9px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: .02em;
+    }
+
+    .buy, .pilot-buy { background: #d8f4e9; color: var(--green); }
+    .hold { background: #dcecff; color: var(--blue); }
+    .protect { background: #fff0d3; color: var(--amber); }
+    .reduce, .exit { background: #ffe0e3; color: var(--red); }
+    .verified { background: #e4f5ed; color: var(--green); }
+    .provisional { background: #fff1d6; color: var(--amber); }
+    .missing { background: #f1f3f5; color: #667085; }
+
+    .metric {
+      padding: 12px;
+      border-radius: 12px;
+      background: #f6f8fb;
+    }
+
+    .metric small { display: block; color: var(--muted); }
+    .metric strong { font-size: 17px; }
+
+    .up { color: var(--red); }
+    .down { color: var(--green); }
+    .flat { color: var(--muted); }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-variant-numeric: tabular-nums;
+    }
+
+    th, td {
+      padding: 10px 9px;
+      border-bottom: 1px solid var(--line);
+      text-align: right;
+      vertical-align: top;
+    }
+
+    th:first-child, td:first-child { text-align: left; }
+    th { color: #52637a; background: #f7f9fc; font-size: 12px; }
+
+    .table-wrap { overflow-x: auto; border: 1px solid var(--line); border-radius: 12px; }
+    .table-wrap table { min-width: 620px; }
+
+    .chip-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 14px;
+    }
+
+    .chip-card {
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      background: #fff;
+    }
+
+    .chip-card-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 13px 15px;
+      color: #fff;
+      background: var(--navy);
+    }
+
+    .chip-card-head h3 { margin: 0; font-size: 17px; }
+    .chip-card-body { padding: 14px 15px; }
+
+    .chip-verdict {
+      margin: 0 0 12px;
+      padding: 10px 12px;
+      border-radius: 10px;
+      background: #f6f8fb;
+      font-weight: 700;
+    }
+
+    .flow-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 8px;
+    }
+
+    .flow-item {
+      min-width: 0;
+      padding: 9px;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: #fff;
+    }
+
+    .flow-label { display: block; color: var(--muted); font-size: 11px; }
+    .flow-value { display: block; font-size: 16px; font-weight: 800; font-variant-numeric: tabular-nums; }
+    .flow-note { display: block; color: var(--muted); font-size: 11px; }
+
+    .chip-divider {
+      margin: 13px 0;
+      border: 0;
+      border-top: 1px solid var(--line);
+    }
+
+    .chip-foot {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .chip-foot strong { display: block; color: var(--ink); font-size: 14px; }
+    .audit-title { margin: 20px 0 10px; }
+
+    .factor-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 14px;
+      margin-top: 14px;
+    }
+
+    .factor-card {
+      padding: 15px;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: #fff;
+    }
+
+    .factor-card-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 9px;
+    }
+
+    .factor-card-head h3 { margin: 0; font-size: 17px; }
+    .factor-score { font-size: 23px; font-weight: 900; color: var(--navy); }
+    .factor-detail { margin: 0; color: var(--muted); font-size: 13px; }
+    .factor-verdict { margin: 9px 0 0; font-weight: 800; }
+
+    .granville-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 14px;
+      margin-top: 14px;
+    }
+
+    .granville-card {
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      background: #fff;
+    }
+
+    .granville-card-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 14px 15px;
+      color: #fff;
+      background: linear-gradient(135deg, var(--navy), #244b73);
+    }
+
+    .granville-card-head h3 { margin: 0; font-size: 17px; }
+    .granville-card-head p { margin: 3px 0 0; color: #d8e8f7; font-size: 12px; }
+    .granville-rule { font-size: 23px; font-weight: 900; letter-spacing: .04em; }
+    .granville-card-body { padding: 14px 15px; }
+    .granville-status { display: block; margin-top: 9px; }
+    .granville-name { margin: 4px 0 10px; color: var(--muted); }
+    .granville-evidence { margin: 0 0 12px; padding-left: 19px; color: #384a5f; }
+    .granville-evidence li { margin: 4px 0; }
+
+    .callout {
+      margin-top: 12px;
+      padding: 13px 15px;
+      border-left: 4px solid var(--blue);
+      border-radius: 8px;
+      background: #eef5fc;
+    }
+
+    .callout.risk { border-left-color: var(--red); background: #fff1f2; }
+    .callout.warning { border-left-color: var(--amber); background: #fff7e8; }
+
+    .checklist { margin: 0; padding: 0; list-style: none; }
+    .checklist li { padding: 8px 0; border-bottom: 1px dashed var(--line); }
+
+    .sources { color: var(--muted); font-size: 12px; }
+    .sources a { color: var(--blue); word-break: break-all; }
+
+    .footer {
+      padding: 20px 4px 0;
+      color: var(--muted);
+      text-align: center;
+      font-size: 12px;
+    }
+
+    @media (max-width: 640px) {
+      .page { width: min(100% - 16px, 1080px); margin-top: 8px; }
+      .hero, .section { padding: 17px; border-radius: 14px; }
+      .section-head { display: block; }
+      .stock-grid { grid-template-columns: 1fr; }
+      .chip-grid { grid-template-columns: 1fr; }
+      .factor-grid { grid-template-columns: 1fr; }
+      .granville-grid { grid-template-columns: 1fr; }
+      .flow-grid { grid-template-columns: repeat(3, minmax(78px, 1fr)); }
+      .chip-foot { grid-template-columns: 1fr; }
+    }
+
+    @media print {
+      body { background: #fff; }
+      .page { width: 100%; margin: 0; }
+      .hero, .section { box-shadow: none; break-inside: avoid; }
+      a { color: inherit; text-decoration: none; }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <header class="hero">
+      <p class="eyebrow">SIRC DAILY MONITOR</p>
+      <h1>核心持股每日籌碼技術報告</h1>
+      <p class="meta">行情日 2026-08-17｜抓取 2026-08-17 23:03:33 +08:00｜資料狀態 批次資料、官方來源與Yahoo實際渲染均已核對；SAM與覆寫已完成</p>
+      <div class="hero-grid">
+        <div class="hero-card"><small>綜合強弱</small><strong>2408 ＞ 6279 ＞ 3711 ＞ 2308 ＞ 2330 ＞ 3022 ＞ 3034 ＞ 2441</strong></div>
+        <div class="hero-card"><small>今日關鍵變化</small><strong>2408 南亞科以SAM 77居首；較前次收盤512變動2.34%；外資11963張、借券增減-3228張</strong></div>
+        <div class="hero-card"><small>最大風險</small><strong>2441 超豐 SAM 41，燈號Reduce</strong></div>
+        <div class="hero-card"><small>隔日主檢查點</small><strong>守住504.3、收紅且成交量至少84638張</strong></div>
+      </div>
+    </header>
+
+    <section class="section">
+      <div class="section-head">
+        <h2>組合儀表板</h2>
+        <p>只呈現相較前一交易日真正改變的資訊</p>
+      </div>
+      <div class="callout"><strong>今日真正變化：</strong>3022：-6／Protect→Reduce，較前次收盤94.2變動2.44%；外資-345張、借券增減-639張；2330：+10／Protect→Protect，較前次收盤2395變動0.21%；外資4442張、借券增減-202張；2441：-5／Reduce→Reduce，較前次收盤120變動-0.83%；外資-526張、借券增減-410張；3034：-2／Reduce→Reduce，較前次收盤512變動-0.59%；外資-169張、借券增減1304張；6279：+3／Hold→Hold，較前次收盤127.5變動0.39%；外資81張、借券增減-233張；2408：+8／Hold→Pilot Buy，較前次收盤512變動2.34%；外資11963張、借券增減-3228張；2308：+2／Hold→Hold，較前次收盤1885變動0%；外資1368張、借券增減666張；3711：+7／Protect→Hold，較前次收盤616變動-0.16%；外資9654張、借券增減224張</div><div class="callout warning"><strong>排名判讀：</strong>技術、籌碼、SAM與四因子回答不同問題；正式報告須分開揭露。</div><div class="table-wrap"><table><thead><tr><th>排名</th><th>標的</th><th>收盤／漲跌</th><th>SAM</th><th>Traffic Light</th><th>分數變化</th><th>真正原因</th></tr></thead><tbody><tr><td>1</td><td>2408 南亞科</td><td><span class="up">524／+2.34%</span></td><td><strong>77</strong></td><td><span class="badge pilot-buy">Pilot Buy</span></td><td>+8／Hold→Pilot Buy</td><td>較前次收盤512變動2.34%；外資11963張、借券增減-3228張</td></tr><tr><td>2</td><td>6279 胡連</td><td><span class="up">128／+0.39%</span></td><td><strong>71</strong></td><td><span class="badge hold">Hold</span></td><td>+3／Hold→Hold</td><td>較前次收盤127.5變動0.39%；外資81張、借券增減-233張</td></tr><tr><td>3</td><td>3711 日月光投控</td><td><span class="down">615／-0.16%</span></td><td><strong>70</strong></td><td><span class="badge hold">Hold</span></td><td>+7／Protect→Hold</td><td>較前次收盤616變動-0.16%；外資9654張、借券增減224張</td></tr><tr><td>4</td><td>2308 台達電</td><td><span class="up">1885／0%</span></td><td><strong>68</strong></td><td><span class="badge hold">Hold</span></td><td>+2／Hold→Hold</td><td>較前次收盤1885變動0%；外資1368張、借券增減666張</td></tr><tr><td>5</td><td>2330 台積電</td><td><span class="up">2400／+0.21%</span></td><td><strong>64</strong></td><td><span class="badge protect">Protect</span></td><td>+10／Protect→Protect</td><td>較前次收盤2395變動0.21%；外資4442張、借券增減-202張</td></tr><tr><td>6</td><td>3022 威強電</td><td><span class="up">96.5／+2.44%</span></td><td><strong>45</strong></td><td><span class="badge reduce">Reduce</span></td><td>-6／Protect→Reduce</td><td>較前次收盤94.2變動2.44%；外資-345張、借券增減-639張</td></tr><tr><td>7</td><td>3034 聯詠</td><td><span class="down">509／-0.59%</span></td><td><strong>43</strong></td><td><span class="badge reduce">Reduce</span></td><td>-2／Reduce→Reduce</td><td>較前次收盤512變動-0.59%；外資-169張、借券增減1304張</td></tr><tr><td>8</td><td>2441 超豐</td><td><span class="down">119／-0.83%</span></td><td><strong>41</strong></td><td><span class="badge reduce">Reduce</span></td><td>-5／Reduce→Reduce</td><td>較前次收盤120變動-0.83%；外資-526張、借券增減-410張</td></tr></tbody></table></div><p class="sources">加權指數2026-08-17收45857.27，5／10／20日2.07%／5.7%／8.03%</p>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <h2>借券 × 外資 × 融資 × 股價四因子綜合判讀</h2>
+        <p>同日資料、成交量標準化、交互覆寫；只作風險與籌碼結構輔助</p>
+      </div>
+      <div class="callout"><strong>模型規格：</strong>外資30＋股價30＋融資20＋借券20；同日、成交量標準化。這是草案監控規則，只可增加警戒或降低候選，不得單獨升級Traffic Light。</div><div class="callout warning"><strong>交互覆寫：</strong>未站MA20不得列乾淨偏多；融資過熱、外資大賣加借券增加及空方共振依固定規則覆寫。</div><div class="table-wrap"><table><thead><tr><th>標的</th><th>外資占量／分</th><th>股價／分</th><th>融資占量／分</th><th>借券占量／分</th><th>合計</th><th>覆寫後判讀</th></tr></thead><tbody><tr><td>6279 胡連</td><td>+24.18%／30</td><td>收盤與MA5高於MA20／30</td><td>-0.3%／15</td><td>-69.55%／20</td><td><strong>95</strong></td><td>乾淨偏多</td></tr><tr><td>2330 台積電</td><td>+35.55%／25</td><td>收盤與MA5高於MA20／30</td><td>-2.67%／20</td><td>-1.62%／17</td><td><strong>92</strong></td><td>乾淨偏多</td></tr><tr><td>2408 南亞科</td><td>+19.66%／25</td><td>收盤與MA5高於MA20／30</td><td>-0.19%／15</td><td>-5.31%／20</td><td><strong>90</strong></td><td>乾淨偏多</td></tr><tr><td>3022 威強電</td><td>-13.07%／0</td><td>收盤與MA5高於MA20／30</td><td>+0.57%／15</td><td>-24.21%／20</td><td><strong>65</strong></td><td>偏多但有風險</td></tr><tr><td>3711 日月光投控</td><td>+46.64%／30</td><td>收盤與MA5高於MA20／10</td><td>-1.24%／10</td><td>+1.08%／10</td><td><strong>60</strong></td><td>多空拉鋸</td></tr><tr><td>2308 台達電</td><td>+10.95%／25</td><td>收盤與MA5高於MA20／15</td><td>+0.64%／0</td><td>+5.33%／5</td><td><strong>45</strong></td><td>偏空警戒</td></tr><tr><td>2441 超豐</td><td>-21.06%／0</td><td>收盤與MA5高於MA20／10</td><td>-2.56%／10</td><td>-16.41%／20</td><td><strong>40</strong></td><td>偏空警戒</td></tr><tr><td>3034 聯詠</td><td>-5.39%／5</td><td>收盤低於或等於MA20／5</td><td>+1.08%／0</td><td>+41.57%／0</td><td><strong>10</strong></td><td>空方共振</td></tr></tbody></table></div><div class="callout"><strong>四因子排名：</strong>6279 ＞ 2330 ＞ 2408 ＞ 3022 ＞ 3711 ＞ 2308 ＞ 2441 ＞ 3034。四因子檢查籌碼品質，SAM評估完整準備度，不得互相替代。</div><div class="factor-grid"><article class="factor-card"><div class="factor-card-head"><h3>6279 胡連</h3><span class="factor-score">95</span></div><span class="badge hold">乾淨偏多</span><p class="factor-verdict">乾淨偏多；四項資料日期已對齊</p><p class="factor-detail">支持：外資81張、融資-1張、借券-233張；反證：若外資轉賣且借券增加，四因子將下修；下一驗證：收復129.2且外資至少連2買</p></article><article class="factor-card"><div class="factor-card-head"><h3>2330 台積電</h3><span class="factor-score">92</span></div><span class="badge protect">乾淨偏多</span><p class="factor-verdict">乾淨偏多；四項資料日期已對齊</p><p class="factor-detail">支持：外資4442張、融資-333張、借券-202張；反證：若外資轉賣且借券增加，四因子將下修；下一驗證：收復2408且外資至少連2買</p></article><article class="factor-card"><div class="factor-card-head"><h3>2408 南亞科</h3><span class="factor-score">90</span></div><span class="badge pilot-buy">乾淨偏多</span><p class="factor-verdict">乾淨偏多；四項資料日期已對齊</p><p class="factor-detail">支持：外資11963張、融資-114張、借券-3228張；反證：若外資轉賣且借券增加，四因子將下修；下一驗證：守住504.3、收紅且成交量至少84638張</p></article><article class="factor-card"><div class="factor-card-head"><h3>3022 威強電</h3><span class="factor-score">65</span></div><span class="badge reduce">偏多但有風險</span><p class="factor-verdict">偏多但有風險；四項資料日期已對齊</p><p class="factor-detail">支持：外資-345張、融資15張、借券-639張；反證：若外資轉賣且借券增加，四因子將下修；下一驗證：收復100.5且外資至少連2買</p></article><article class="factor-card"><div class="factor-card-head"><h3>3711 日月光投控</h3><span class="factor-score">60</span></div><span class="badge hold">多空拉鋸</span><p class="factor-verdict">多空拉鋸；四項資料日期已對齊</p><p class="factor-detail">支持：外資9654張、融資-256張、借券224張；反證：若外資轉賣且借券增加，四因子將下修；下一驗證：收復621.4且外資至少連2買</p></article><article class="factor-card"><div class="factor-card-head"><h3>2308 台達電</h3><span class="factor-score">45</span></div><span class="badge hold">偏空警戒</span><p class="factor-verdict">偏空警戒；四項資料日期已對齊</p><p class="factor-detail">支持：外資1368張、融資80張、借券666張；反證：若外資轉賣且借券增加，四因子將下修；下一驗證：守住1850且外資停止賣超並至少連2買</p></article><article class="factor-card"><div class="factor-card-head"><h3>2441 超豐</h3><span class="factor-score">40</span></div><span class="badge reduce">偏空警戒</span><p class="factor-verdict">偏空警戒；四項資料日期已對齊</p><p class="factor-detail">支持：外資-526張、融資-64張、借券-410張；反證：若外資轉賣且借券增加，四因子將下修；下一驗證：收復122.8且外資至少連2買</p></article><article class="factor-card"><div class="factor-card-head"><h3>3034 聯詠</h3><span class="factor-score">10</span></div><span class="badge reduce">空方共振</span><p class="factor-verdict">空方共振；四項資料日期已對齊</p><p class="factor-detail">支持：外資-169張、融資34張、借券1304張；反證：若外資轉賣且借券增加，四因子將下修；下一驗證：收復526.8且外資至少連2買</p></article></div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <h2>葛蘭碧八大法則位階</h2>
+        <p>以日線MA20判斷四買、四賣、趨勢位階與下一個確認／失效條件</p>
+      </div>
+      <div class="callout"><strong>判定基準：</strong>採日線MA20，依價格穿越、均線方向、回測／反彈及動態乖離門檻分類。八法是技術狀態框架，不是下單指令；未滿足完整條件時顯示「尚未形成」。</div><div class="granville-grid"><article class="granville-card" data-granville-code="2408"><div class="granville-card-head"><div><h3>2408 南亞科</h3><p>多頭過熱回檔觀察</p></div><span class="granville-rule">S8</span></div><div class="granville-card-body"><span class="badge reduce">均值回歸型偏空訊號</span><strong class="granville-status">賣出法則8達監控門檻</strong><p class="granville-name">上升均線上方正乖離過大</p><ul class="granville-evidence"><li>收盤524；MA20 438.2</li><li>MA20五日斜率+4.49%；前期斜率+3.77%</li><li>MA20乖離+19.57%；過度乖離門檻&#177;17%</li></ul><p><strong>確認：</strong>正乖離開始收斂或出現高檔轉弱</p><p><strong>失效：</strong>均線與股價同步上移，乖離未擴大</p><p class="sources">過度乖離門檻＝max（5%，近20日平均絕對MA20乖離&#215;1.5）；為本報告監控規則，非原典固定值。</p></div></article><article class="granville-card" data-granville-code="6279"><div class="granville-card-head"><div><h3>6279 胡連</h3><p>上升均線之上，多頭延續</p></div><span class="granville-rule">NONE</span></div><div class="granville-card-body"><span class="badge protect">觀察</span><strong class="granville-status">未觸發；以趨勢位階監控</strong><p class="granville-name">八法尚未形成</p><ul class="granville-evidence"><li>收盤128；MA20 120.5</li><li>MA20五日斜率+2.38%；前期斜率+2.15%</li><li>MA20乖離+6.2%；過度乖離門檻&#177;7%</li></ul><p><strong>確認：</strong>守住MA20 120.5，觀察回測是否止穩</p><p><strong>失效：</strong>收盤跌回MA20 120.5下方</p><p class="sources">過度乖離門檻＝max（5%，近20日平均絕對MA20乖離&#215;1.5）；為本報告監控規則，非原典固定值。</p></div></article><article class="granville-card" data-granville-code="3711"><div class="granville-card-head"><div><h3>3711 日月光投控</h3><p>下降均線上方，反彈測試</p></div><span class="granville-rule">NONE</span></div><div class="granville-card-body"><span class="badge protect">觀察</span><strong class="granville-status">未觸發；以趨勢位階監控</strong><p class="granville-name">八法尚未形成</p><ul class="granville-evidence"><li>收盤615；MA20 598.8</li><li>MA20五日斜率-0.91%；前期斜率-1.39%</li><li>MA20乖離+2.7%；過度乖離門檻&#177;9%</li></ul><p><strong>確認：</strong>守住MA20 598.8，觀察回測是否止穩</p><p><strong>失效：</strong>收盤跌回MA20 598.8下方</p><p class="sources">過度乖離門檻＝max（5%，近20日平均絕對MA20乖離&#215;1.5）；為本報告監控規則，非原典固定值。</p></div></article><article class="granville-card" data-granville-code="2308"><div class="granville-card-head"><div><h3>2308 台達電</h3><p>上升均線之上，多頭延續</p></div><span class="granville-rule">NONE</span></div><div class="granville-card-body"><span class="badge protect">觀察</span><strong class="granville-status">未觸發；以趨勢位階監控</strong><p class="granville-name">八法尚未形成</p><ul class="granville-evidence"><li>收盤1885；MA20 1731.2</li><li>MA20五日斜率+0.45%；前期斜率-0.29%</li><li>MA20乖離+8.88%；過度乖離門檻&#177;11%</li></ul><p><strong>確認：</strong>守住MA20 1731.2，觀察回測是否止穩</p><p><strong>失效：</strong>收盤跌回MA20 1731.2下方</p><p class="sources">過度乖離門檻＝max（5%，近20日平均絕對MA20乖離&#215;1.5）；為本報告監控規則，非原典固定值。</p></div></article><article class="granville-card" data-granville-code="2330"><div class="granville-card-head"><div><h3>2330 台積電</h3><p>均線走平上方，等待方向</p></div><span class="granville-rule">NONE</span></div><div class="granville-card-body"><span class="badge protect">觀察</span><strong class="granville-status">未觸發；以趨勢位階監控</strong><p class="granville-name">八法尚未形成</p><ul class="granville-evidence"><li>收盤2400；MA20 2363.8</li><li>MA20五日斜率+0.21%；前期斜率-0.08%</li><li>MA20乖離+1.53%；過度乖離門檻&#177;5%</li></ul><p><strong>確認：</strong>守住MA20 2363.8，觀察回測是否止穩</p><p><strong>失效：</strong>收盤跌回MA20 2363.8下方</p><p class="sources">過度乖離門檻＝max（5%，近20日平均絕對MA20乖離&#215;1.5）；為本報告監控規則，非原典固定值。</p></div></article><article class="granville-card" data-granville-code="3022"><div class="granville-card-head"><div><h3>3022 威強電</h3><p>多頭趨勢回測</p></div><span class="granville-rule">B3</span></div><div class="granville-card-body"><span class="badge buy">偏多型訊號</span><strong class="granville-status">買進法則3已觸發</strong><p class="granville-name">回測上升均線後反彈</p><ul class="granville-evidence"><li>收盤96.5；MA20 95</li><li>MA20五日斜率+4.75%；前期斜率+5.18%</li><li>MA20乖離+1.58%；過度乖離門檻&#177;11%</li></ul><p><strong>確認：</strong>低點守住MA20 95，收盤續高</p><p><strong>失效：</strong>收盤有效跌破MA20 95</p><p class="sources">過度乖離門檻＝max（5%，近20日平均絕對MA20乖離&#215;1.5）；為本報告監控規則，非原典固定值。</p></div></article><article class="granville-card" data-granville-code="3034"><div class="granville-card-head"><div><h3>3034 聯詠</h3><p>上升均線下方，回檔待收復</p></div><span class="granville-rule">NONE</span></div><div class="granville-card-body"><span class="badge protect">觀察</span><strong class="granville-status">未觸發；以趨勢位階監控</strong><p class="granville-name">八法尚未形成</p><ul class="granville-evidence"><li>收盤509；MA20 518.4</li><li>MA20五日斜率+3.02%；前期斜率+3.3%</li><li>MA20乖離-1.82%；過度乖離門檻&#177;6%</li></ul><p><strong>確認：</strong>收復MA20 518.4，再確認均線方向</p><p><strong>失效：</strong>反彈無法收復MA20 518.4</p><p class="sources">過度乖離門檻＝max（5%，近20日平均絕對MA20乖離&#215;1.5）；為本報告監控規則，非原典固定值。</p></div></article><article class="granville-card" data-granville-code="2441"><div class="granville-card-head"><div><h3>2441 超豐</h3><p>下降均線上方，反彈測試</p></div><span class="granville-rule">NONE</span></div><div class="granville-card-body"><span class="badge protect">觀察</span><strong class="granville-status">未觸發；以趨勢位階監控</strong><p class="granville-name">八法尚未形成</p><ul class="granville-evidence"><li>收盤119；MA20 117.5</li><li>MA20五日斜率-1.51%；前期斜率-1.86%</li><li>MA20乖離+1.27%；過度乖離門檻&#177;13%</li></ul><p><strong>確認：</strong>守住MA20 117.5，觀察回測是否止穩</p><p><strong>失效：</strong>收盤跌回MA20 117.5下方</p><p class="sources">過度乖離門檻＝max（5%，近20日平均絕對MA20乖離&#215;1.5）；為本報告監控規則，非原典固定值。</p></div></article></div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <h2>個股監控</h2>
+        <p>卡片數量隨監控標的自動增減</p>
+      </div>
+      <div class="stock-grid">
+        <article class="stock-card"><div class="stock-card-head"><h3>2408 南亞科</h3><div class="score">77</div></div><div class="stock-card-body"><span class="badge pilot-buy">Pilot Buy</span><div class="metric-grid"><div class="metric"><small>收盤／量</small><strong class="up">524／60,842張</strong></div><div class="metric"><small>MA5／20／60</small><strong>504.3／438.25／412.94</strong></div><div class="metric"><small>K／D</small><strong>84.98／87.89</strong></div><div class="metric"><small>5／10／20日</small><strong>+4.38%／+32.16%／+37.53%</strong></div></div><p><strong>量價／生命週期：</strong>量為20日均量0.72倍；20日區間322至542</p><p><strong>相對強弱：</strong>五日報酬較加權指數+2.31個百分點</p><p><strong>支撐／壓力／失敗點：</strong>382.2／542／382.2；硬失敗411.3</p><p><strong>Devil's Advocate：</strong>推翻多方：跌破382.2，或外資轉賣且借券連續增加；推翻空方：守住504.3、收紅且成交量至少84638張</p></div></article><article class="stock-card"><div class="stock-card-head"><h3>6279 胡連</h3><div class="score">71</div></div><div class="stock-card-body"><span class="badge hold">Hold</span><div class="metric-grid"><div class="metric"><small>收盤／量</small><strong class="up">128／335張</strong></div><div class="metric"><small>MA5／20／60</small><strong>129.2／120.53／120.04</strong></div><div class="metric"><small>K／D</small><strong>88.18／92.45</strong></div><div class="metric"><small>5／10／20日</small><strong>-1.54%／+8.94%／+12.28%</strong></div></div><p><strong>量價／生命週期：</strong>量為20日均量0.4倍；20日區間110至131</p><p><strong>相對強弱：</strong>五日報酬較加權指數-3.61個百分點</p><p><strong>支撐／壓力／失敗點：</strong>128／131／128；硬失敗118.2</p><p><strong>Devil's Advocate：</strong>推翻多方：跌破128，或外資轉賣且借券連續增加；推翻空方：收復129.2且外資至少連2買</p></div></article><article class="stock-card"><div class="stock-card-head"><h3>3711 日月光投控</h3><div class="score">70</div></div><div class="stock-card-body"><span class="badge hold">Hold</span><div class="metric-grid"><div class="metric"><small>收盤／量</small><strong class="down">615／20,697張</strong></div><div class="metric"><small>MA5／20／60</small><strong>621.4／598.85／616.62</strong></div><div class="metric"><small>K／D</small><strong>74.04／80.35</strong></div><div class="metric"><small>5／10／20日</small><strong>-2.38%／+0.82%／+3.02%</strong></div></div><p><strong>量價／生命週期：</strong>量為20日均量1倍；20日區間465.5至673</p><p><strong>相對強弱：</strong>五日報酬較加權指數-4.45個百分點</p><p><strong>支撐／壓力／失敗點：</strong>555.8／673／555.8；硬失敗632.2</p><p><strong>Devil's Advocate：</strong>推翻多方：跌破555.8，或外資轉賣且借券連續增加；推翻空方：收復621.4且外資至少連2買</p></div></article><article class="stock-card"><div class="stock-card-head"><h3>2308 台達電</h3><div class="score">68</div></div><div class="stock-card-body"><span class="badge hold">Hold</span><div class="metric-grid"><div class="metric"><small>收盤／量</small><strong class="up">1885／12,495張</strong></div><div class="metric"><small>MA5／20／60</small><strong>1850／1731.25／1986.83</strong></div><div class="metric"><small>K／D</small><strong>83.02／85.01</strong></div><div class="metric"><small>5／10／20日</small><strong>+3.86%／+19.3%／+10.56%</strong></div></div><p><strong>量價／生命週期：</strong>量為20日均量0.92倍；20日區間1425至2005</p><p><strong>相對強弱：</strong>五日報酬較加權指數+1.79個百分點</p><p><strong>支撐／壓力／失敗點：</strong>1629／2005／1629；硬失敗1821</p><p><strong>Devil's Advocate：</strong>推翻多方：跌破1629，或外資轉賣且借券連續增加；推翻空方：守住1850且外資停止賣超並至少連2買</p></div></article><article class="stock-card"><div class="stock-card-head"><h3>2330 台積電</h3><div class="score">64</div></div><div class="stock-card-body"><span class="badge protect">Protect</span><div class="metric-grid"><div class="metric"><small>收盤／量</small><strong class="up">2400／12,495張</strong></div><div class="metric"><small>MA5／20／60</small><strong>2408／2363.75／2373.83</strong></div><div class="metric"><small>K／D</small><strong>80.39／84.42</strong></div><div class="metric"><small>5／10／20日</small><strong>+0.84%／+1.27%／+3.45%</strong></div></div><p><strong>量價／生命週期：</strong>量為20日均量0.44倍；20日區間2180至2445</p><p><strong>相對強弱：</strong>五日報酬較加權指數-1.23個百分點</p><p><strong>支撐／壓力／失敗點：</strong>2310／2445／2310；硬失敗2370.8</p><p><strong>Devil's Advocate：</strong>推翻多方：跌破2310，或外資轉賣且借券連續增加；推翻空方：收復2408且外資至少連2買</p></div></article><article class="stock-card"><div class="stock-card-head"><h3>3022 威強電</h3><div class="score">45</div></div><div class="stock-card-body"><span class="badge reduce">Reduce</span><div class="metric-grid"><div class="metric"><small>收盤／量</small><strong class="up">96.5／2,639張</strong></div><div class="metric"><small>MA5／20／60</small><strong>100.46／95／86.39</strong></div><div class="metric"><small>K／D</small><strong>43.09／60.42</strong></div><div class="metric"><small>5／10／20日</small><strong>-14.6%／+4.89%／+23.24%</strong></div></div><p><strong>量價／生命週期：</strong>量為20日均量0.6倍；20日區間78.5至116.5</p><p><strong>相對強弱：</strong>五日報酬較加權指數-16.67個百分點</p><p><strong>支撐／壓力／失敗點：</strong>107／116.5／107；硬失敗91.8</p><p><strong>Devil's Advocate：</strong>推翻多方：跌破107，或外資轉賣且借券連續增加；推翻空方：收復100.5且外資至少連2買</p></div></article><article class="stock-card"><div class="stock-card-head"><h3>3034 聯詠</h3><div class="score">43</div></div><div class="stock-card-body"><span class="badge reduce">Reduce</span><div class="metric-grid"><div class="metric"><small>收盤／量</small><strong class="down">509／3,137張</strong></div><div class="metric"><small>MA5／20／60</small><strong>526.8／518.43／509.14</strong></div><div class="metric"><small>K／D</small><strong>35.83／47.26</strong></div><div class="metric"><small>5／10／20日</small><strong>-6.43%／-1.93%／+11.14%</strong></div></div><p><strong>量價／生命週期：</strong>量為20日均量0.75倍；20日區間462.5至572</p><p><strong>相對強弱：</strong>五日報酬較加權指數-8.5個百分點</p><p><strong>支撐／壓力／失敗點：</strong>490.8／572／490.8；硬失敗451</p><p><strong>Devil's Advocate：</strong>推翻多方：跌破490.8，或外資轉賣且借券連續增加；推翻空方：收復526.8且外資至少連2買</p></div></article><article class="stock-card"><div class="stock-card-head"><h3>2441 超豐</h3><div class="score">41</div></div><div class="stock-card-body"><span class="badge reduce">Reduce</span><div class="metric-grid"><div class="metric"><small>收盤／量</small><strong class="down">119／2,498張</strong></div><div class="metric"><small>MA5／20／60</small><strong>122.8／117.51／128.09</strong></div><div class="metric"><small>K／D</small><strong>70.58／80.13</strong></div><div class="metric"><small>5／10／20日</small><strong>-7.75%／+7.69%／0%</strong></div></div><p><strong>量價／生命週期：</strong>量為20日均量0.35倍；20日區間92至131</p><p><strong>相對強弱：</strong>五日報酬較加權指數-9.82個百分點</p><p><strong>支撐／壓力／失敗點：</strong>122.4／131／122.4；硬失敗119.1</p><p><strong>Devil's Advocate：</strong>推翻多方：跌破122.4，或外資轉賣且借券連續增加；推翻空方：收復122.8且外資至少連2買</p></div></article>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <h2>法人、主力與信用籌碼</h2>
+        <p>先看方向與連續性，再查精確買進／賣出；所有張數均為整數張</p>
+      </div>
+      <div class="chip-grid">
+        <article class="chip-card"><div class="chip-card-head"><h3>2408 南亞科</h3><span class="badge verified">2026-08-17已驗證</span></div><div class="chip-card-body"><p class="chip-verdict">外資連1買、三大法人5日48055張、主力10408 張</p><div class="flow-grid"><div class="flow-item"><span class="flow-label">外資</span><span class="flow-value">+11,963張</span><span class="flow-note">連1買</span></div><div class="flow-item"><span class="flow-label">投信</span><span class="flow-value">-160張</span><span class="flow-note">連1賣</span></div><div class="flow-item"><span class="flow-label">三大</span><span class="flow-value">+11,896張</span><span class="flow-note">連1買</span></div></div><hr class="chip-divider"><div class="flow-grid"><div class="flow-item"><span class="flow-label">三大3日</span><span class="flow-value">+47,979</span></div><div class="flow-item"><span class="flow-label">三大5日</span><span class="flow-value">+48,055</span></div><div class="flow-item"><span class="flow-label">三大10日</span><span class="flow-value">+126,632</span></div></div><hr class="chip-divider"><div class="chip-foot"><div><span>Yahoo主力（2026/08/17）</span><strong>+10,408張／17.07%</strong></div><div><span>信用籌碼</span><strong>融資83,585（-114）；融券2,787（137）；借券60,727（-3228），日期2026-08-17</strong></div></div><p class="sources">TWSE法人官方定稿；Yahoo法人2026/08/17、主力2026/08/17；Yahoo資券2026/08/17</p></div></article><article class="chip-card"><div class="chip-card-head"><h3>6279 胡連</h3><span class="badge verified">2026-08-17已驗證</span></div><div class="chip-card-body"><p class="chip-verdict">外資至少連10買、三大法人5日948張、主力31 張</p><div class="flow-grid"><div class="flow-item"><span class="flow-label">外資</span><span class="flow-value">+81張</span><span class="flow-note">至少連10買</span></div><div class="flow-item"><span class="flow-label">投信</span><span class="flow-value">0張</span><span class="flow-note">連2平</span></div><div class="flow-item"><span class="flow-label">三大</span><span class="flow-value">+79張</span><span class="flow-note">至少連10買</span></div></div><hr class="chip-divider"><div class="flow-grid"><div class="flow-item"><span class="flow-label">三大3日</span><span class="flow-value">+400</span></div><div class="flow-item"><span class="flow-label">三大5日</span><span class="flow-value">+948</span></div><div class="flow-item"><span class="flow-label">三大10日</span><span class="flow-value">+3,872</span></div></div><hr class="chip-divider"><div class="chip-foot"><div><span>Yahoo主力（2026/08/17）</span><strong>+31張／9.25%</strong></div><div><span>信用籌碼</span><strong>融資2,820（-1）；融券18（5）；借券4,124（-233），日期2026-08-17</strong></div></div><p class="sources">TPEx法人官方定稿；Yahoo法人2026/08/17、主力2026/08/17；Yahoo資券2026/08/17</p></div></article><article class="chip-card"><div class="chip-card-head"><h3>3711 日月光投控</h3><span class="badge verified">2026-08-17已驗證</span></div><div class="chip-card-body"><p class="chip-verdict">外資連3買、三大法人5日1591張、主力978 張</p><div class="flow-grid"><div class="flow-item"><span class="flow-label">外資</span><span class="flow-value">+9,654張</span><span class="flow-note">連3買</span></div><div class="flow-item"><span class="flow-label">投信</span><span class="flow-value">-5,690張</span><span class="flow-note">連4賣</span></div><div class="flow-item"><span class="flow-label">三大</span><span class="flow-value">+4,265張</span><span class="flow-note">連1買</span></div></div><hr class="chip-divider"><div class="flow-grid"><div class="flow-item"><span class="flow-label">三大3日</span><span class="flow-value">+5,029</span></div><div class="flow-item"><span class="flow-label">三大5日</span><span class="flow-value">+1,591</span></div><div class="flow-item"><span class="flow-label">三大10日</span><span class="flow-value">-12,118</span></div></div><hr class="chip-divider"><div class="chip-foot"><div><span>Yahoo主力（2026/08/17）</span><strong>+978張／4.72%</strong></div><div><span>信用籌碼</span><strong>融資12,069（-256）；融券178（-7）；借券26,617（224），日期2026-08-17</strong></div></div><p class="sources">TWSE法人官方定稿；Yahoo法人2026/08/17、主力2026/08/17；Yahoo資券2026/08/17</p></div></article><article class="chip-card"><div class="chip-card-head"><h3>2308 台達電</h3><span class="badge verified">2026-08-17已驗證</span></div><div class="chip-card-body"><p class="chip-verdict">外資連1買、三大法人5日-3593張、主力481 張</p><div class="flow-grid"><div class="flow-item"><span class="flow-label">外資</span><span class="flow-value">+1,368張</span><span class="flow-note">連1買</span></div><div class="flow-item"><span class="flow-label">投信</span><span class="flow-value">-811張</span><span class="flow-note">連1賣</span></div><div class="flow-item"><span class="flow-label">三大</span><span class="flow-value">+666張</span><span class="flow-note">連1買</span></div></div><hr class="chip-divider"><div class="flow-grid"><div class="flow-item"><span class="flow-label">三大3日</span><span class="flow-value">+1,187</span></div><div class="flow-item"><span class="flow-label">三大5日</span><span class="flow-value">-3,593</span></div><div class="flow-item"><span class="flow-label">三大10日</span><span class="flow-value">-289</span></div></div><hr class="chip-divider"><div class="chip-foot"><div><span>Yahoo主力（2026/08/17）</span><strong>+481張／3.84%</strong></div><div><span>信用籌碼</span><strong>融資8,000（80）；融券56（-7）；借券8,376（666），日期2026-08-17</strong></div></div><p class="sources">TWSE法人官方定稿；Yahoo法人2026/08/17、主力2026/08/17；Yahoo資券2026/08/17</p></div></article><article class="chip-card"><div class="chip-card-head"><h3>2330 台積電</h3><span class="badge verified">2026-08-17已驗證</span></div><div class="chip-card-body"><p class="chip-verdict">外資連1買、三大法人5日10164張、主力2078 張</p><div class="flow-grid"><div class="flow-item"><span class="flow-label">外資</span><span class="flow-value">+4,442張</span><span class="flow-note">連1買</span></div><div class="flow-item"><span class="flow-label">投信</span><span class="flow-value">-2,058張</span><span class="flow-note">連2賣</span></div><div class="flow-item"><span class="flow-label">三大</span><span class="flow-value">+2,526張</span><span class="flow-note">連1買</span></div></div><hr class="chip-divider"><div class="flow-grid"><div class="flow-item"><span class="flow-label">三大3日</span><span class="flow-value">+3,549</span></div><div class="flow-item"><span class="flow-label">三大5日</span><span class="flow-value">+10,164</span></div><div class="flow-item"><span class="flow-label">三大10日</span><span class="flow-value">+3,778</span></div></div><hr class="chip-divider"><div class="chip-foot"><div><span>Yahoo主力（2026/08/17）</span><strong>+2,078張／16.62%</strong></div><div><span>信用籌碼</span><strong>融資27,727（-333）；融券36（0）；借券16,080（-202），日期2026-08-17</strong></div></div><p class="sources">TWSE法人官方定稿；Yahoo法人2026/08/17、主力2026/08/17；Yahoo資券2026/08/17</p></div></article><article class="chip-card"><div class="chip-card-head"><h3>3022 威強電</h3><span class="badge verified">2026-08-17已驗證</span></div><div class="chip-card-body"><p class="chip-verdict">外資連3賣、三大法人5日-1487張、主力-248 張</p><div class="flow-grid"><div class="flow-item"><span class="flow-label">外資</span><span class="flow-value">-345張</span><span class="flow-note">連3賣</span></div><div class="flow-item"><span class="flow-label">投信</span><span class="flow-value">0張</span><span class="flow-note">連5平</span></div><div class="flow-item"><span class="flow-label">三大</span><span class="flow-value">-282張</span><span class="flow-note">連3賣</span></div></div><hr class="chip-divider"><div class="flow-grid"><div class="flow-item"><span class="flow-label">三大3日</span><span class="flow-value">-2,253</span></div><div class="flow-item"><span class="flow-label">三大5日</span><span class="flow-value">-1,487</span></div><div class="flow-item"><span class="flow-label">三大10日</span><span class="flow-value">+3,436</span></div></div><hr class="chip-divider"><div class="chip-foot"><div><span>Yahoo主力（2026/08/17）</span><strong>-248張／9.35%</strong></div><div><span>信用籌碼</span><strong>融資5,979（15）；融券0（0）；借券2,913（-639），日期2026-08-17</strong></div></div><p class="sources">TWSE法人官方定稿；Yahoo法人2026/08/17、主力2026/08/17；Yahoo資券2026/08/17</p></div></article><article class="chip-card"><div class="chip-card-head"><h3>3034 聯詠</h3><span class="badge verified">2026-08-17已驗證</span></div><div class="chip-card-body"><p class="chip-verdict">外資連2賣、三大法人5日193張、主力-36 張</p><div class="flow-grid"><div class="flow-item"><span class="flow-label">外資</span><span class="flow-value">-169張</span><span class="flow-note">連2賣</span></div><div class="flow-item"><span class="flow-label">投信</span><span class="flow-value">-21張</span><span class="flow-note">連3賣</span></div><div class="flow-item"><span class="flow-label">三大</span><span class="flow-value">-109張</span><span class="flow-note">連2賣</span></div></div><hr class="chip-divider"><div class="flow-grid"><div class="flow-item"><span class="flow-label">三大3日</span><span class="flow-value">-599</span></div><div class="flow-item"><span class="flow-label">三大5日</span><span class="flow-value">+193</span></div><div class="flow-item"><span class="flow-label">三大10日</span><span class="flow-value">+4,640</span></div></div><hr class="chip-divider"><div class="chip-foot"><div><span>Yahoo主力（2026/08/17）</span><strong>-36張／1.15%</strong></div><div><span>信用籌碼</span><strong>融資2,756（34）；融券244（-33）；借券25,847（1304），日期2026-08-17</strong></div></div><p class="sources">TWSE法人官方定稿；Yahoo法人2026/08/17、主力2026/08/17；Yahoo資券2026/08/17</p></div></article><article class="chip-card"><div class="chip-card-head"><h3>2441 超豐</h3><span class="badge verified">2026-08-17已驗證</span></div><div class="chip-card-body"><p class="chip-verdict">外資連3賣、三大法人5日3553張、主力-517 張</p><div class="flow-grid"><div class="flow-item"><span class="flow-label">外資</span><span class="flow-value">-526張</span><span class="flow-note">連3賣</span></div><div class="flow-item"><span class="flow-label">投信</span><span class="flow-value">0張</span><span class="flow-note">連1平</span></div><div class="flow-item"><span class="flow-label">三大</span><span class="flow-value">-534張</span><span class="flow-note">連3賣</span></div></div><hr class="chip-divider"><div class="flow-grid"><div class="flow-item"><span class="flow-label">三大3日</span><span class="flow-value">-889</span></div><div class="flow-item"><span class="flow-label">三大5日</span><span class="flow-value">+3,553</span></div><div class="flow-item"><span class="flow-label">三大10日</span><span class="flow-value">+5,818</span></div></div><hr class="chip-divider"><div class="chip-foot"><div><span>Yahoo主力（2026/08/17）</span><strong>-517張／20.69%</strong></div><div><span>信用籌碼</span><strong>融資7,402（-64）；融券87（-6）；借券14,303（-410），日期2026-08-17</strong></div></div><p class="sources">TWSE法人官方定稿；Yahoo法人2026/08/17、主力2026/08/17；Yahoo資券2026/08/17</p></div></article>
+      </div>
+      <h3 class="audit-title">法人完整明細</h3>
+      <p class="sources">每檔獨立呈現；底層保留 TWSE 精確股數核算，分項四捨五入可能造成 1 張顯示差。</p>
+      <h3 class="audit-title">2408 南亞科</h3><div class="table-wrap"><table><thead><tr><th>類別</th><th>買進</th><th>賣出</th><th>當日</th><th>連續性</th><th>3日</th><th>5日</th><th>10日</th></tr></thead><tbody><tr><td>外資</td><td>+26,859</td><td>+14,896</td><td>+11,963</td><td>連1買</td><td>+44,678</td><td>+45,130</td><td>+119,026</td></tr><tr><td>投信</td><td>+80</td><td>+240</td><td>-160</td><td>連1賣</td><td>+1,949</td><td>+2,312</td><td>+7,653</td></tr><tr><td>自營商</td><td>+819</td><td>+726</td><td>+92</td><td>連1買</td><td>+1,352</td><td>+614</td><td>-48</td></tr><tr><td>三大法人</td><td>+27,758</td><td>+15,862</td><td>+11,896</td><td>連1買</td><td>+47,979</td><td>+48,055</td><td>+126,632</td></tr></tbody></table></div><p class="sources">TWSE法人 精確股數核算；當日算術差0股。</p><h3 class="audit-title">6279 胡連</h3><div class="table-wrap"><table><thead><tr><th>類別</th><th>買進</th><th>賣出</th><th>當日</th><th>連續性</th><th>3日</th><th>5日</th><th>10日</th></tr></thead><tbody><tr><td>外資</td><td>+158</td><td>+76</td><td>+81</td><td>至少連10買</td><td>+435</td><td>+899</td><td>+3,627</td></tr><tr><td>投信</td><td>0</td><td>0</td><td>0</td><td>連2平</td><td>-1</td><td>-2</td><td>-7</td></tr><tr><td>自營商</td><td>+1</td><td>+3</td><td>-2</td><td>連3賣</td><td>-34</td><td>+51</td><td>+252</td></tr><tr><td>三大法人</td><td>+159</td><td>+79</td><td>+79</td><td>至少連10買</td><td>+400</td><td>+948</td><td>+3,872</td></tr></tbody></table></div><p class="sources">TPEx法人 精確股數核算；當日算術差0股。</p><h3 class="audit-title">3711 日月光投控</h3><div class="table-wrap"><table><thead><tr><th>類別</th><th>買進</th><th>賣出</th><th>當日</th><th>連續性</th><th>3日</th><th>5日</th><th>10日</th></tr></thead><tbody><tr><td>外資</td><td>+14,099</td><td>+4,445</td><td>+9,654</td><td>連3買</td><td>+17,434</td><td>+15,904</td><td>-6,973</td></tr><tr><td>投信</td><td>+224</td><td>+5,914</td><td>-5,690</td><td>連4賣</td><td>-12,836</td><td>-14,423</td><td>-4,462</td></tr><tr><td>自營商</td><td>+513</td><td>+212</td><td>+300</td><td>連1買</td><td>+432</td><td>+109</td><td>-682</td></tr><tr><td>三大法人</td><td>+14,835</td><td>+10,570</td><td>+4,265</td><td>連1買</td><td>+5,029</td><td>+1,591</td><td>-12,118</td></tr></tbody></table></div><p class="sources">TWSE法人 精確股數核算；當日算術差0股。</p><h3 class="audit-title">2308 台達電</h3><div class="table-wrap"><table><thead><tr><th>類別</th><th>買進</th><th>賣出</th><th>當日</th><th>連續性</th><th>3日</th><th>5日</th><th>10日</th></tr></thead><tbody><tr><td>外資</td><td>+8,221</td><td>+6,852</td><td>+1,368</td><td>連1買</td><td>+1,776</td><td>-4,019</td><td>-566</td></tr><tr><td>投信</td><td>+355</td><td>+1,166</td><td>-811</td><td>連1賣</td><td>-579</td><td>+600</td><td>+108</td></tr><tr><td>自營商</td><td>+406</td><td>+298</td><td>+108</td><td>連1買</td><td>-10</td><td>-173</td><td>+168</td></tr><tr><td>三大法人</td><td>+8,982</td><td>+8,316</td><td>+666</td><td>連1買</td><td>+1,187</td><td>-3,593</td><td>-289</td></tr></tbody></table></div><p class="sources">TWSE法人 精確股數核算；當日算術差0股。</p><h3 class="audit-title">2330 台積電</h3><div class="table-wrap"><table><thead><tr><th>類別</th><th>買進</th><th>賣出</th><th>當日</th><th>連續性</th><th>3日</th><th>5日</th><th>10日</th></tr></thead><tbody><tr><td>外資</td><td>+9,470</td><td>+5,029</td><td>+4,442</td><td>連1買</td><td>+5,390</td><td>+11,515</td><td>+8,086</td></tr><tr><td>投信</td><td>+26</td><td>+2,084</td><td>-2,058</td><td>連2賣</td><td>-1,703</td><td>-734</td><td>-1,373</td></tr><tr><td>自營商</td><td>+396</td><td>+254</td><td>+142</td><td>連1買</td><td>-138</td><td>-617</td><td>-2,935</td></tr><tr><td>三大法人</td><td>+9,892</td><td>+7,366</td><td>+2,526</td><td>連1買</td><td>+3,549</td><td>+10,164</td><td>+3,778</td></tr></tbody></table></div><p class="sources">TWSE法人 精確股數核算；當日算術差0股。</p><h3 class="audit-title">3022 威強電</h3><div class="table-wrap"><table><thead><tr><th>類別</th><th>買進</th><th>賣出</th><th>當日</th><th>連續性</th><th>3日</th><th>5日</th><th>10日</th></tr></thead><tbody><tr><td>外資</td><td>+537</td><td>+882</td><td>-345</td><td>連3賣</td><td>-2,138</td><td>-1,213</td><td>+3,044</td></tr><tr><td>投信</td><td>0</td><td>0</td><td>0</td><td>連5平</td><td>0</td><td>0</td><td>+283</td></tr><tr><td>自營商</td><td>+77</td><td>+14</td><td>+63</td><td>連2買</td><td>-115</td><td>-275</td><td>+109</td></tr><tr><td>三大法人</td><td>+614</td><td>+896</td><td>-282</td><td>連3賣</td><td>-2,253</td><td>-1,487</td><td>+3,436</td></tr></tbody></table></div><p class="sources">TWSE法人 精確股數核算；當日算術差0股。</p><h3 class="audit-title">3034 聯詠</h3><div class="table-wrap"><table><thead><tr><th>類別</th><th>買進</th><th>賣出</th><th>當日</th><th>連續性</th><th>3日</th><th>5日</th><th>10日</th></tr></thead><tbody><tr><td>外資</td><td>+2,213</td><td>+2,382</td><td>-169</td><td>連2賣</td><td>-416</td><td>+494</td><td>+6,189</td></tr><tr><td>投信</td><td>+119</td><td>+140</td><td>-21</td><td>連3賣</td><td>-112</td><td>-114</td><td>-924</td></tr><tr><td>自營商</td><td>+136</td><td>+54</td><td>+82</td><td>連1買</td><td>-70</td><td>-188</td><td>-625</td></tr><tr><td>三大法人</td><td>+2,468</td><td>+2,576</td><td>-109</td><td>連2賣</td><td>-599</td><td>+193</td><td>+4,640</td></tr></tbody></table></div><p class="sources">TWSE法人 精確股數核算；當日算術差0股。</p><h3 class="audit-title">2441 超豐</h3><div class="table-wrap"><table><thead><tr><th>類別</th><th>買進</th><th>賣出</th><th>當日</th><th>連續性</th><th>3日</th><th>5日</th><th>10日</th></tr></thead><tbody><tr><td>外資</td><td>+753</td><td>+1,279</td><td>-526</td><td>連3賣</td><td>-727</td><td>+3,431</td><td>+3,803</td></tr><tr><td>投信</td><td>0</td><td>0</td><td>0</td><td>連1平</td><td>-1</td><td>-21</td><td>+1,403</td></tr><tr><td>自營商</td><td>+101</td><td>+110</td><td>-9</td><td>連3賣</td><td>-161</td><td>+143</td><td>+613</td></tr><tr><td>三大法人</td><td>+854</td><td>+1,389</td><td>-534</td><td>連3賣</td><td>-889</td><td>+3,553</td><td>+5,818</td></tr></tbody></table></div><p class="sources">TWSE法人 精確股數核算；當日算術差0股。</p>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <h2>條件檢查</h2>
+        <p>假設目前空手：每檔均列價格、法人、量價三道進場門及失敗點</p>
+      </div>
+      <div class="table-wrap"><table><thead><tr><th>標的</th><th>價格結構門</th><th>法人連續門</th><th>量價確認門</th><th>空手候選狀態</th><th>失敗點</th></tr></thead><tbody><tr><td>2408 南亞科</td><td>通過：收盤524高於MA5與MA20</td><td>通過：外資連1買、三大5日48055張</td><td>未通過：漲跌2.34%、量為20日均量0.72倍</td><td><span class="badge pilot-buy">Pilot Buy</span></td><td>382.2；硬失敗411.3</td></tr><tr><td>6279 胡連</td><td>未通過：收盤128、MA5 129.2、MA20 120.525</td><td>通過：外資至少連10買、三大5日948張</td><td>未通過：漲跌0.39%、量為20日均量0.4倍</td><td><span class="badge hold">Hold</span></td><td>128；硬失敗118.2</td></tr><tr><td>3711 日月光投控</td><td>未通過：收盤615、MA5 621.4、MA20 598.85</td><td>通過：外資連3買、三大5日1591張</td><td>未通過：漲跌-0.16%、量為20日均量1倍</td><td><span class="badge hold">Hold</span></td><td>555.8；硬失敗632.2</td></tr><tr><td>2308 台達電</td><td>通過：收盤1885高於MA5與MA20</td><td>未通過：外資連1買、三大5日-3593張</td><td>未通過：漲跌0%、量為20日均量0.92倍</td><td><span class="badge hold">Hold</span></td><td>1629；硬失敗1821</td></tr><tr><td>2330 台積電</td><td>未通過：收盤2400、MA5 2408、MA20 2363.75</td><td>通過：外資連1買、三大5日10164張</td><td>未通過：漲跌0.21%、量為20日均量0.44倍</td><td><span class="badge protect">Protect</span></td><td>2310；硬失敗2370.8</td></tr><tr><td>3022 威強電</td><td>未通過：收盤96.5、MA5 100.46、MA20 94.995</td><td>未通過：外資連3賣、三大5日-1487張</td><td>未通過：漲跌2.44%、量為20日均量0.6倍</td><td><span class="badge reduce">Reduce</span></td><td>107；硬失敗91.8</td></tr><tr><td>3034 聯詠</td><td>未通過：收盤509、MA5 526.8、MA20 518.425</td><td>未通過：外資連2賣、三大5日193張</td><td>未通過：漲跌-0.59%、量為20日均量0.75倍</td><td><span class="badge reduce">Reduce</span></td><td>490.8；硬失敗451</td></tr><tr><td>2441 超豐</td><td>未通過：收盤119、MA5 122.8、MA20 117.51</td><td>未通過：外資連3賣、三大5日3553張</td><td>未通過：漲跌-0.83%、量為20日均量0.35倍</td><td><span class="badge reduce">Reduce</span></td><td>122.4；硬失敗119.1</td></tr></tbody></table></div><div class="callout warning"><strong>空手紀律：</strong>任何標的不得只因單日外資轉買翻多；正式新交易日須重新檢查三道門。</div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <h2>隔日 Playbook</h2>
+        <p>確認點、失敗點與下一個可驗證證據</p>
+      </div>
+      <div class="table-wrap"><table><thead><tr><th>標的</th><th>確認點</th><th>失敗點</th><th>觀察事項</th><th>客觀觸發條件</th></tr></thead><tbody><tr><td>2408 南亞科</td><td>守住504.3、收紅且成交量至少84638張</td><td>382.2；硬失敗411.3</td><td>MA5／MA20、外資連續性、量能與借券方向</td><td>守住504.3、收紅且成交量至少84638張</td></tr><tr><td>6279 胡連</td><td>收復129.2且外資至少連2買</td><td>128；硬失敗118.2</td><td>MA5／MA20、外資連續性、量能與借券方向</td><td>收復129.2且外資至少連2買</td></tr><tr><td>3711 日月光投控</td><td>收復621.4且外資至少連2買</td><td>555.8；硬失敗632.2</td><td>MA5／MA20、外資連續性、量能與借券方向</td><td>收復621.4且外資至少連2買</td></tr><tr><td>2308 台達電</td><td>守住1850且外資停止賣超並至少連2買</td><td>1629；硬失敗1821</td><td>MA5／MA20、外資連續性、量能與借券方向</td><td>守住1850且外資停止賣超並至少連2買</td></tr><tr><td>2330 台積電</td><td>收復2408且外資至少連2買</td><td>2310；硬失敗2370.8</td><td>MA5／MA20、外資連續性、量能與借券方向</td><td>收復2408且外資至少連2買</td></tr><tr><td>3022 威強電</td><td>收復100.5且外資至少連2買</td><td>107；硬失敗91.8</td><td>MA5／MA20、外資連續性、量能與借券方向</td><td>收復100.5且外資至少連2買</td></tr><tr><td>3034 聯詠</td><td>收復526.8且外資至少連2買</td><td>490.8；硬失敗451</td><td>MA5／MA20、外資連續性、量能與借券方向</td><td>收復526.8且外資至少連2買</td></tr><tr><td>2441 超豐</td><td>收復122.8且外資至少連2買</td><td>122.4；硬失敗119.1</td><td>MA5／MA20、外資連續性、量能與借券方向</td><td>收復122.8且外資至少連2買</td></tr></tbody></table></div>
+    </section>
+
+    <section class="section sources">
+      <h2>資料來源與稽核</h2>
+      <div class="table-wrap"><table><thead><tr><th>資料項目</th><th>來源</th><th>資料日期</th><th>抓取時間</th><th>驗證狀態</th></tr></thead><tbody><tr><td>行情、量、MA、KD</td><td>本機 /api/kline/{stock}?limit=90</td><td>2026-08-17</td><td>2026-08-17 23:03:33 +08:00</td><td>已取得</td></tr><tr><td>七檔上市三大法人</td><td><a href="https://www.twse.com.tw/rwd/zh/fund/T86?date=20260817&amp;selectType=ALL&amp;response=json">TWSE T86</a></td><td>2026-08-17</td><td>2026-08-17 23:03:33 +08:00</td><td>官方定稿</td></tr><tr><td>6279上櫃三大法人</td><td><a href="https://www.tpex.org.tw/web/stock/3insti/daily_trade/3itrade_hedge_result.php">TPEx dailyTrade</a></td><td>2026-08-17</td><td>2026-08-17 23:03:33 +08:00</td><td>官方定稿</td></tr><tr><td>七檔上市融資融券</td><td><a href="https://www.twse.com.tw/rwd/zh/marginTrading/MI_MARGN?date=20260817&amp;selectType=STOCK&amp;response=json">TWSE MI_MARGN</a></td><td>2026-08-17</td><td>2026-08-17 23:03:33 +08:00</td><td>官方已取得</td></tr><tr><td>6279上櫃融資融券</td><td><a href="https://www.tpex.org.tw/openapi/v1/tpex_mainboard_margin_balance">TPEx margin balance</a></td><td>2026-08-17</td><td>2026-08-17 23:03:33 +08:00</td><td>官方已取得</td></tr><tr><td>七檔上市借券賣出餘額</td><td><a href="https://www.twse.com.tw/rwd/zh/marginTrading/TWT93U?date=20260817&amp;response=json">TWSE TWT93U</a></td><td>2026-08-17</td><td>2026-08-17 23:03:33 +08:00</td><td>官方已取得</td></tr><tr><td>6279上櫃借券賣出餘額</td><td><a href="https://www.tpex.org.tw/openapi/v1/tpex_margin_sbl">TPEx margin SBL</a></td><td>2026-08-17</td><td>2026-08-17 23:03:33 +08:00</td><td>官方已取得</td></tr><tr><td>法人／主力／資券交叉檢查</td><td>Yahoo實際渲染</td><td>法人／主力2026/08/17；資券2026-08-17</td><td>2026-08-17 23:03:41</td><td>已核對</td></tr><tr><td>加權指數</td><td><a href="https://www.twse.com.tw/rwd/zh/afterTrading/FMTQIK?date=20260817&amp;response=json">TWSE FMTQIK</a></td><td>2026-08-17</td><td>2026-08-17 23:03:33 +08:00</td><td>官方已取得</td></tr></tbody></table></div><p>關鍵數字均保留來源、日期及狀態；Yahoo資券2026-08-17。Yahoo資券僅作輔助核驗，不取代TWSE／TPEx交易所官方信用資料。</p>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <h2>SAM 監控分數算法</h2>
+        <p>固定揭露權重、分項得分、Traffic Light 門檻與硬性覆寫規則</p>
+      </div>
+      <p>技術結構25＋法人與主力連續性25＋量價確認15＋相對強弱15＋觸發器／失敗點品質10＋資料品質10。</p><div class="table-wrap"><table><thead><tr><th>標的</th><th>技術25</th><th>法人25</th><th>量價15</th><th>相對15</th><th>觸發10</th><th>資料10</th><th>總分</th><th>最終判定</th></tr></thead><tbody><tr><td>2408 南亞科</td><td>22</td><td>21</td><td>5</td><td>9</td><td>10</td><td>10</td><td><strong>77</strong></td><td><span class="badge pilot-buy">Pilot Buy</span>：無額外覆寫</td></tr><tr><td>6279 胡連</td><td>22</td><td>25</td><td>5</td><td>5</td><td>4</td><td>10</td><td><strong>71</strong></td><td><span class="badge hold">Hold</span>：無額外覆寫</td></tr><tr><td>3711 日月光投控</td><td>17</td><td>25</td><td>9</td><td>5</td><td>4</td><td>10</td><td><strong>70</strong></td><td><span class="badge hold">Hold</span>：無額外覆寫</td></tr><tr><td>2308 台達電</td><td>17</td><td>17</td><td>7</td><td>9</td><td>8</td><td>10</td><td><strong>68</strong></td><td><span class="badge hold">Hold</span>：無額外覆寫</td></tr><tr><td>2330 台積電</td><td>17</td><td>21</td><td>5</td><td>5</td><td>6</td><td>10</td><td><strong>64</strong></td><td><span class="badge protect">Protect</span>：無額外覆寫</td></tr><tr><td>3022 威強電</td><td>22</td><td>4</td><td>5</td><td>2</td><td>2</td><td>10</td><td><strong>45</strong></td><td><span class="badge reduce">Reduce</span>：無額外覆寫</td></tr><tr><td>3034 聯詠</td><td>14</td><td>8</td><td>5</td><td>2</td><td>4</td><td>10</td><td><strong>43</strong></td><td><span class="badge reduce">Reduce</span>：四因子為空方共振，不得升為Buy／Pilot Buy</td></tr><tr><td>2441 超豐</td><td>14</td><td>8</td><td>5</td><td>2</td><td>2</td><td>10</td><td><strong>41</strong></td><td><span class="badge reduce">Reduce</span>：無額外覆寫</td></tr></tbody></table></div><div class="callout"><strong>門檻：</strong>85–100 Buy、75–84 Pilot Buy、65–74 Hold、50–64 Protect、35–49 Reduce、0–34 Exit。空手Pilot Buy要求價格門通過，且法人或量價至少再過一門；Buy要求三門全過。</div><div class="callout warning"><strong>今日覆寫：</strong>3034：四因子為空方共振，不得升為Buy／Pilot Buy</div>
+    </section>
+
+    <footer class="footer">
+      本報告用於投資檢討與監控，不構成下單指示，也不保證獲利。<br>
+      QA通過後才分別嘗試Email與Pages／LINE。
+    </footer>
+  </main>
+</body>
+</html>
