@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>【每日平台突破報告】2026-08-25</title>
+  <style>
+    :root { --ink:#172033; --muted:#5f6b7b; --line:#dbe2ea; --bg:#f4f7fb; --card:#fff; --navy:#15355b; --blue:#2369b2; --amber:#a46200; --amber-bg:#fff5df; --gray-bg:#eef2f6; }
+    * { box-sizing:border-box; }
+    html,body { margin:0; max-width:100%; background:var(--bg); color:var(--ink); font-family:"Microsoft JhengHei","Noto Sans TC",Arial,sans-serif; line-height:1.55; }
+    main { max-width:1180px; margin:0 auto; padding:34px 22px 54px; }
+    .hero { background:linear-gradient(120deg,#102d4d,#2369b2); color:#fff; border-radius:16px; padding:28px 30px; box-shadow:0 10px 28px #15355b30; }
+    h1 { margin:0 0 5px; font-size:clamp(1.6rem,3.6vw,2.3rem); }
+    h2 { font-size:1.25rem; margin:30px 0 12px; color:var(--navy); }
+    .sub { margin:0; opacity:.88; }
+    .meta { display:flex; flex-wrap:wrap; gap:9px; margin-top:18px; }
+    .meta span { padding:5px 10px; border:1px solid #ffffff55; border-radius:99px; font-size:.88rem; }
+    .grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:14px; margin:18px 0; }
+    .card { background:var(--card); border:1px solid var(--line); border-radius:12px; padding:17px; box-shadow:0 2px 8px #17203308; }
+    .label { color:var(--muted); font-size:.87rem; }
+    .value { font-size:1.65rem; font-weight:800; color:var(--navy); margin-top:2px; }
+    .callout { border-left:4px solid var(--amber); background:var(--amber-bg); border-radius:8px; padding:14px 16px; }
+    .table-wrap { overflow-x:auto; border:1px solid var(--line); border-radius:12px; background:#fff; }
+    table { width:100%; border-collapse:collapse; min-width:1010px; }
+    th,td { padding:11px 10px; text-align:left; vertical-align:top; border-bottom:1px solid var(--line); font-size:.9rem; }
+    th { background:#eaf1f8; color:#213f5e; white-space:nowrap; }
+    tr:last-child td { border-bottom:0; }
+    .rank { font-weight:800; color:var(--blue); }
+    .stock-link { color:var(--blue); text-decoration:underline; text-decoration-thickness:1px; text-underline-offset:3px; }
+    .stock-link:hover,.stock-link:focus-visible { color:var(--navy); }
+    .gray { display:inline-block; color:#45505e; background:var(--gray-bg); padding:2px 7px; border-radius:999px; font-size:.8rem; white-space:nowrap; }
+    .priority { font-weight:700; }
+    .up { color:#b42318; font-weight:700; }
+    .down { color:#067647; font-weight:700; }
+    .flat { color:#667085; font-weight:700; }
+    .institution td:first-child { background:#f8fafc; }
+    .chip-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(340px,1fr)); gap:14px; }
+    .chip-card { overflow:hidden; border:1px solid var(--line); border-radius:16px; background:#fff; box-shadow:0 2px 8px #17203308; }
+    .chip-card-head { display:flex; align-items:center; justify-content:space-between; gap:12px; padding:13px 15px; color:#fff; background:var(--navy); }
+    .chip-card-head h3 { margin:0; font-size:1.06rem; }
+    .chip-card-head .stock-link { color:#fff; }
+    .flow-badge { display:inline-block; padding:3px 9px; border-radius:999px; font-size:.76rem; font-weight:800; white-space:nowrap; }
+    .flow-badge.positive { color:#087f5b; background:#dff4ea; }
+    .flow-badge.mixed { color:#965a00; background:#fff0d3; }
+    .flow-badge.negative { color:#667085; background:#f1f3f5; }
+    .chip-card-body { padding:14px 15px; }
+    .chip-verdict { margin:0 0 12px; padding:10px 12px; border-radius:10px; background:#f6f8fb; font-weight:700; }
+    .flow-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:8px; }
+    .flow-item { min-width:0; padding:9px; border:1px solid var(--line); border-radius:10px; background:#fff; }
+    .flow-label { display:block; color:var(--muted); font-size:.72rem; }
+    .flow-value { display:block; font-size:1rem; font-weight:800; font-variant-numeric:tabular-nums; }
+    .flow-note { display:block; color:var(--muted); font-size:.72rem; }
+    .chip-divider { margin:13px 0; border:0; border-top:1px solid var(--line); }
+    .chip-foot { display:grid; grid-template-columns:1fr 1fr; gap:10px; color:var(--muted); font-size:.76rem; }
+    .chip-foot strong { display:block; color:var(--ink); font-size:.88rem; }
+    .detail-title { margin:22px 0 8px; color:var(--navy); }
+    .source { background:#fff; border:1px solid var(--line); border-radius:12px; padding:16px; color:var(--muted); font-size:.9rem; }
+    .source a { color:var(--blue); }
+    .foot { margin-top:25px; color:var(--muted); font-size:.88rem; }
+    ul { padding-left:1.25rem; }
+    @media (max-width:720px) {
+      html,body { overflow-x:hidden; }
+      main { width:100%; min-width:0; padding:18px 13px 38px; }
+      .hero,.grid,.card,.callout,.source,.table-wrap,.chip-card { max-width:100%; min-width:0; }
+      .hero { padding:22px 19px; }
+      .grid,.chip-grid { grid-template-columns:minmax(0,1fr); }
+      .flow-grid { grid-template-columns:repeat(3,minmax(74px,1fr)); }
+      .chip-foot { grid-template-columns:1fr; }
+      .sub,.card,.callout,.source,.chip-verdict { overflow-wrap:anywhere; }
+      .table-wrap { overflow-x:auto; -webkit-overflow-scrolling:touch; }
+    }
+  </style>
+</head>
+<body>
+<main>
+  <section class="hero">
+    <h1>【每日平台突破報告】</h1>
+    <p class="sub">SIRC 平台整理突破監控｜研究優先名單，不構成買賣建議或獲利保證。</p>
+    <div class="meta"><span>市場／法人資料日：2026-08-25</span><span>執行時間：2026-08-25 23:02（Asia/Taipei）</span><span>查詢模式：首突破</span><span>服務／查詢：HTTP 200</span></div>
+  </section>
+  <section class="grid" aria-label="摘要">
+  <div class="card"><div class="label">符合平台突破條件</div><div class="value">5 檔</div><div>當日完整篩選結果</div></div>
+  <div class="card"><div class="label">最值得先看</div><div class="value">2612</div><div>中航：三大近 3 日 +2,053 張</div></div>
+  <div class="card"><div class="label">法人資料狀態</div><div class="value">5／5</div><div>官方資料已依上市／上櫃路由</div></div>
+</section>
+  <section class="callout"><strong>監控結論：</strong>2612 中航：距高點 0.0%，三大今日 +902 張、近 3 日 +2,053 張；2606 裕民：距高點 0.0%，三大今日 +11,091 張、近 3 日 +18,246 張；2881 富邦金：距高點 0.0%，三大今日 +18,413 張、近 3 日 +36,046 張。完整 SAM 仍缺主力、基準相對強弱與正式驗證欄位，因此不產生虛構總分或燈號。</section>
+  <h2>依注意優先級排序</h2>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>優先</th><th>標的</th><th>關鍵技術／量能數據</th><th>SAM／Traffic Light</th><th>入選原因與主要風險</th><th>後續觀察點</th></tr></thead>
+      <tbody><tr><td class="rank">1｜最值得注意</td><td><strong><a class="stock-link" href="http://localhost:8080/kline/2612" target="_blank" rel="noopener">2612 中航</a></strong><br>收盤 63.80</td><td>60日高／低：62.40／49.50<br>量 7,175 張；5/20量比 2.61；量比 10.33<br>MA5／20／60：60.50／55.40／54.39<br>突破比 1.0224；K/D 87.53／89.56</td><td><span class="gray">SAM：未評估</span><br><span class="gray">灰燈：資料缺口</span></td><td><span class="priority">距 60 日高 0.0%；量比 10.33。 三大近 3 日 +2,053 張。</span><br>風險：K/D 位於高檔；單日上漲 5.80%</td><td>確認帶量突破 62.40，並維持法人買超。</td></tr>
+<tr><td class="rank">2</td><td><strong><a class="stock-link" href="http://localhost:8080/kline/2606" target="_blank" rel="noopener">2606 裕民</a></strong><br>收盤 78.00</td><td>60日高／低：76.00／59.10<br>量 55,534 張；5/20量比 1.84；量比 10.38<br>MA5／20／60：72.52／66.98／65.06<br>突破比 1.0263；K/D 88.55／90.51</td><td><span class="gray">SAM：未評估</span><br><span class="gray">灰燈：資料缺口</span></td><td><span class="priority">距 60 日高 0.0%；量比 10.38。 三大近 3 日 +18,246 張。</span><br>風險：K/D 位於高檔；單日上漲 7.88%</td><td>確認帶量突破 76.00，並維持法人買超。</td></tr>
+<tr><td class="rank">3</td><td><strong><a class="stock-link" href="http://localhost:8080/kline/2881" target="_blank" rel="noopener">2881 富邦金</a></strong><br>收盤 141.50</td><td>60日高／低：141.00／107.00<br>量 45,297 張；5/20量比 1.08；量比 2.36<br>MA5／20／60：132.80／128.90／126.72<br>突破比 1.0035；K/D 79.37／76.95</td><td><span class="gray">SAM：未評估</span><br><span class="gray">灰燈：資料缺口</span></td><td><span class="priority">距 60 日高 0.0%；量比 2.36。 三大近 3 日 +36,046 張。</span><br>風險：單日上漲 7.20%</td><td>確認帶量突破 141.00，並維持法人買超。</td></tr>
+<tr><td class="rank">4</td><td><strong><a class="stock-link" href="http://localhost:8080/kline/2617" target="_blank" rel="noopener">2617 台航</a></strong><br>收盤 31.85</td><td>60日高／低：32.65／27.85<br>量 4,912 張；5/20量比 2.49；量比 3.40<br>MA5／20／60：31.45／29.50／29.60<br>突破比 0.9755；K/D 85.38／84.96</td><td><span class="gray">SAM：未評估</span><br><span class="gray">灰燈：資料缺口</span></td><td><span class="priority">距 60 日高 2.5%；量比 3.40。 三大近 3 日 +3,160 張。</span><br>風險：K/D 位於高檔；MA20 仍低於 MA60</td><td>確認帶量突破 32.65，並維持法人買超。</td></tr>
+<tr><td class="rank">5</td><td><strong><a class="stock-link" href="http://localhost:8080/kline/6472" target="_blank" rel="noopener">6472 保瑞</a></strong><br>收盤 470.00</td><td>60日高／低：462.00／337.00<br>量 3,171 張；5/20量比 1.78；量比 3.28<br>MA5／20／60：445.70／417.60／410.05<br>突破比 1.0173；K/D 82.99／63.80</td><td><span class="gray">SAM：未評估</span><br><span class="gray">灰燈：資料缺口</span></td><td><span class="priority">距 60 日高 0.0%；量比 3.28。</span><br>風險：三大今日 -195 張</td><td>確認帶量突破 462.00，且三大法人重新轉買。</td></tr>
+</tbody>
+    </table>
+  </div>
+  <h2>三大法人今日與近期買賣超</h2>
+  <div class="source" style="margin-bottom:12px"><strong>單位：張；資料日：2026-08-25。</strong>5 檔 TWSE T86。累計採最近 10 個實際交易日：8/25、8/24、8/21、8/20、8/19、8/18、8/17、8/14、8/13、8/12。上櫃股不以 T86 缺值代替 0，而是自動改取 TPEx 對應資料。</div>
+  <div class="chip-grid" aria-label="三大法人卡片摘要"><article class="chip-card">
+  <div class="chip-card-head"><h3><a class="stock-link" href="http://localhost:8080/kline/2612" target="_blank" rel="noopener">2612 中航</a></h3><span class="flow-badge positive">TWSE T86｜法人延續</span></div>
+  <div class="chip-card-body">
+    <p class="chip-verdict">三大今日 +902 張，近 3／5／10 日皆為正。</p>
+    <div class="flow-grid"><div class="flow-item"><span class="flow-label">外資今日</span><strong class="flow-value up">+856</strong><span class="flow-note">連7買</span></div><div class="flow-item"><span class="flow-label">投信今日</span><strong class="flow-value flat">0</strong><span class="flow-note">連10平</span></div><div class="flow-item"><span class="flow-label">三大今日</span><strong class="flow-value up">+902</strong><span class="flow-note">連7買</span></div></div>
+    <hr class="chip-divider"><div class="flow-grid"><div class="flow-item"><span class="flow-label">三大 3 日</span><strong class="flow-value up">+2,053</strong></div><div class="flow-item"><span class="flow-label">三大 5 日</span><strong class="flow-value up">+2,572</strong></div><div class="flow-item"><span class="flow-label">三大 10 日</span><strong class="flow-value up">+3,092</strong></div></div>
+    <hr class="chip-divider"><div class="chip-foot"><div>自營商今日<strong class="up">+46 張｜連1買</strong></div><div>判讀重點<strong>法人方向與波段累計同向</strong></div></div>
+  </div>
+</article>
+<article class="chip-card">
+  <div class="chip-card-head"><h3><a class="stock-link" href="http://localhost:8080/kline/2606" target="_blank" rel="noopener">2606 裕民</a></h3><span class="flow-badge positive">TWSE T86｜法人延續</span></div>
+  <div class="chip-card-body">
+    <p class="chip-verdict">三大今日 +11,091 張，近 3／5／10 日皆為正。</p>
+    <div class="flow-grid"><div class="flow-item"><span class="flow-label">外資今日</span><strong class="flow-value up">+12,872</strong><span class="flow-note">連8買</span></div><div class="flow-item"><span class="flow-label">投信今日</span><strong class="flow-value down">-1,029</strong><span class="flow-note">連2賣</span></div><div class="flow-item"><span class="flow-label">三大今日</span><strong class="flow-value up">+11,091</strong><span class="flow-note">連8買</span></div></div>
+    <hr class="chip-divider"><div class="flow-grid"><div class="flow-item"><span class="flow-label">三大 3 日</span><strong class="flow-value up">+18,246</strong></div><div class="flow-item"><span class="flow-label">三大 5 日</span><strong class="flow-value up">+20,180</strong></div><div class="flow-item"><span class="flow-label">三大 10 日</span><strong class="flow-value up">+25,167</strong></div></div>
+    <hr class="chip-divider"><div class="chip-foot"><div>自營商今日<strong class="down">-752 張｜連2賣</strong></div><div>判讀重點<strong>法人方向與波段累計同向</strong></div></div>
+  </div>
+</article>
+<article class="chip-card">
+  <div class="chip-card-head"><h3><a class="stock-link" href="http://localhost:8080/kline/2881" target="_blank" rel="noopener">2881 富邦金</a></h3><span class="flow-badge positive">TWSE T86｜法人延續</span></div>
+  <div class="chip-card-body">
+    <p class="chip-verdict">三大今日 +18,413 張，近 3／5／10 日皆為正。</p>
+    <div class="flow-grid"><div class="flow-item"><span class="flow-label">外資今日</span><strong class="flow-value up">+18,668</strong><span class="flow-note">連1買</span></div><div class="flow-item"><span class="flow-label">投信今日</span><strong class="flow-value down">-8</strong><span class="flow-note">連1賣</span></div><div class="flow-item"><span class="flow-label">三大今日</span><strong class="flow-value up">+18,413</strong><span class="flow-note">連1買</span></div></div>
+    <hr class="chip-divider"><div class="flow-grid"><div class="flow-item"><span class="flow-label">三大 3 日</span><strong class="flow-value up">+36,046</strong></div><div class="flow-item"><span class="flow-label">三大 5 日</span><strong class="flow-value up">+34,159</strong></div><div class="flow-item"><span class="flow-label">三大 10 日</span><strong class="flow-value up">+43,638</strong></div></div>
+    <hr class="chip-divider"><div class="chip-foot"><div>自營商今日<strong class="down">-246 張｜連1賣</strong></div><div>判讀重點<strong>法人方向與波段累計同向</strong></div></div>
+  </div>
+</article>
+<article class="chip-card">
+  <div class="chip-card-head"><h3><a class="stock-link" href="http://localhost:8080/kline/2617" target="_blank" rel="noopener">2617 台航</a></h3><span class="flow-badge positive">TWSE T86｜法人延續</span></div>
+  <div class="chip-card-body">
+    <p class="chip-verdict">三大今日 +1,680 張，近 3／5／10 日皆為正。</p>
+    <div class="flow-grid"><div class="flow-item"><span class="flow-label">外資今日</span><strong class="flow-value up">+1,685</strong><span class="flow-note">連7買</span></div><div class="flow-item"><span class="flow-label">投信今日</span><strong class="flow-value flat">0</strong><span class="flow-note">連10平</span></div><div class="flow-item"><span class="flow-label">三大今日</span><strong class="flow-value up">+1,680</strong><span class="flow-note">連7買</span></div></div>
+    <hr class="chip-divider"><div class="flow-grid"><div class="flow-item"><span class="flow-label">三大 3 日</span><strong class="flow-value up">+3,160</strong></div><div class="flow-item"><span class="flow-label">三大 5 日</span><strong class="flow-value up">+4,651</strong></div><div class="flow-item"><span class="flow-label">三大 10 日</span><strong class="flow-value up">+4,754</strong></div></div>
+    <hr class="chip-divider"><div class="chip-foot"><div>自營商今日<strong class="down">-5 張｜連4賣</strong></div><div>判讀重點<strong>法人方向與波段累計同向</strong></div></div>
+  </div>
+</article>
+<article class="chip-card">
+  <div class="chip-card-head"><h3><a class="stock-link" href="http://localhost:8080/kline/6472" target="_blank" rel="noopener">6472 保瑞</a></h3><span class="flow-badge mixed">TWSE T86｜短線轉賣</span></div>
+  <div class="chip-card-body">
+    <p class="chip-verdict">三大今日 -195 張，近 5／10 日仍為正。</p>
+    <div class="flow-grid"><div class="flow-item"><span class="flow-label">外資今日</span><strong class="flow-value down">-572</strong><span class="flow-note">連3賣</span></div><div class="flow-item"><span class="flow-label">投信今日</span><strong class="flow-value up">+258</strong><span class="flow-note">連4買</span></div><div class="flow-item"><span class="flow-label">三大今日</span><strong class="flow-value down">-195</strong><span class="flow-note">連2賣</span></div></div>
+    <hr class="chip-divider"><div class="flow-grid"><div class="flow-item"><span class="flow-label">三大 3 日</span><strong class="flow-value down">-411</strong></div><div class="flow-item"><span class="flow-label">三大 5 日</span><strong class="flow-value up">+776</strong></div><div class="flow-item"><span class="flow-label">三大 10 日</span><strong class="flow-value up">+621</strong></div></div>
+    <hr class="chip-divider"><div class="chip-foot"><div>自營商今日<strong class="up">+118 張｜連1買</strong></div><div>判讀重點<strong>短線轉弱、波段籌碼未翻空</strong></div></div>
+  </div>
+</article>
+</div>
+  <h3 class="detail-title">完整法人稽核明細</h3>
+  <div class="table-wrap">
+    <table class="institution">
+      <thead><tr><th>標的／來源</th><th>法人</th><th>今日買進</th><th>今日賣出</th><th>今日買賣超</th><th>近3日</th><th>近5日</th><th>近10日</th><th>連續性</th></tr></thead>
+      <tbody><tr><td rowspan="4"><a class="stock-link" href="http://localhost:8080/kline/2612" target="_blank" rel="noopener">2612 中航</a><br>TWSE T86</td><td>外資</td><td>2,979</td><td>2,123</td><td class="up">+856</td><td class="up">+2,006</td><td class="up">+2,538</td><td class="up">+3,022</td><td>連7買</td></tr>
+<tr><td>投信</td><td>0</td><td>0</td><td class="flat">0</td><td class="flat">0</td><td class="flat">0</td><td class="flat">0</td><td>連10平</td></tr>
+<tr><td>自營商</td><td>72</td><td>26</td><td class="up">+46</td><td class="up">+46</td><td class="up">+34</td><td class="up">+70</td><td>連1買</td></tr>
+<tr><td>三大合計</td><td>3,051</td><td>2,149</td><td class="up">+902</td><td class="up">+2,053</td><td class="up">+2,572</td><td class="up">+3,092</td><td>連7買</td></tr>
+<tr><td rowspan="4"><a class="stock-link" href="http://localhost:8080/kline/2606" target="_blank" rel="noopener">2606 裕民</a><br>TWSE T86</td><td>外資</td><td>19,630</td><td>6,759</td><td class="up">+12,872</td><td class="up">+19,358</td><td class="up">+20,672</td><td class="up">+25,361</td><td>連8買</td></tr>
+<tr><td>投信</td><td>1</td><td>1,030</td><td class="down">-1,029</td><td class="down">-1,100</td><td class="down">-588</td><td class="down">-534</td><td>連2賣</td></tr>
+<tr><td>自營商</td><td>886</td><td>1,638</td><td class="down">-752</td><td class="down">-12</td><td class="up">+96</td><td class="up">+340</td><td>連2賣</td></tr>
+<tr><td>三大合計</td><td>20,517</td><td>9,426</td><td class="up">+11,091</td><td class="up">+18,246</td><td class="up">+20,180</td><td class="up">+25,167</td><td>連8買</td></tr>
+<tr><td rowspan="4"><a class="stock-link" href="http://localhost:8080/kline/2881" target="_blank" rel="noopener">2881 富邦金</a><br>TWSE T86</td><td>外資</td><td>33,527</td><td>14,860</td><td class="up">+18,668</td><td class="up">+36,471</td><td class="up">+35,165</td><td class="up">+45,451</td><td>連1買</td></tr>
+<tr><td>投信</td><td>2</td><td>10</td><td class="down">-8</td><td class="down">-4</td><td class="down">-358</td><td class="down">-929</td><td>連1賣</td></tr>
+<tr><td>自營商</td><td>629</td><td>875</td><td class="down">-246</td><td class="down">-422</td><td class="down">-648</td><td class="down">-884</td><td>連1賣</td></tr>
+<tr><td>三大合計</td><td>34,159</td><td>15,745</td><td class="up">+18,413</td><td class="up">+36,046</td><td class="up">+34,159</td><td class="up">+43,638</td><td>連1買</td></tr>
+<tr><td rowspan="4"><a class="stock-link" href="http://localhost:8080/kline/2617" target="_blank" rel="noopener">2617 台航</a><br>TWSE T86</td><td>外資</td><td>2,640</td><td>955</td><td class="up">+1,685</td><td class="up">+3,212</td><td class="up">+4,598</td><td class="up">+4,688</td><td>連7買</td></tr>
+<tr><td>投信</td><td>0</td><td>0</td><td class="flat">0</td><td class="flat">0</td><td class="flat">0</td><td class="flat">0</td><td>連10平</td></tr>
+<tr><td>自營商</td><td>11</td><td>16</td><td class="down">-5</td><td class="down">-52</td><td class="up">+53</td><td class="up">+67</td><td>連4賣</td></tr>
+<tr><td>三大合計</td><td>2,651</td><td>971</td><td class="up">+1,680</td><td class="up">+3,160</td><td class="up">+4,651</td><td class="up">+4,754</td><td>連7買</td></tr>
+<tr><td rowspan="4"><a class="stock-link" href="http://localhost:8080/kline/6472" target="_blank" rel="noopener">6472 保瑞</a><br>TWSE T86</td><td>外資</td><td>739</td><td>1,311</td><td class="down">-572</td><td class="down">-1,624</td><td class="down">-974</td><td class="down">-1,034</td><td>連3賣</td></tr>
+<tr><td>投信</td><td>258</td><td>0</td><td class="up">+258</td><td class="up">+1,023</td><td class="up">+1,491</td><td class="up">+1,491</td><td>連4買</td></tr>
+<tr><td>自營商</td><td>202</td><td>83</td><td class="up">+118</td><td class="up">+190</td><td class="up">+259</td><td class="up">+164</td><td>連1買</td></tr>
+<tr><td>三大合計</td><td>1,199</td><td>1,394</td><td class="down">-195</td><td class="down">-411</td><td class="up">+776</td><td class="up">+621</td><td>連2賣</td></tr>
+</tbody>
+    </table>
+  </div>
+  <h2>方法、資料缺口與風險</h2>
+  <div class="source"><ul>
+  <li>平台篩選固定條件：首突破；60 日箱體幅度 ≤ 45%、20 日箱體幅度 ≤ 30%、突破比 ≥ 0.960、成交量 ≥ 2,000 張、量比 ≥ 1.30、5／20 日均量比 ≥ 1.00、MA20／MA60 ≥ 0.980、MA20 趨勢比 ≥ 0.980。</li>
+  <li>法人資料：上市股採 <a href="https://www.twse.com.tw/rwd/zh/fund/T86?date=20260825&amp;selectType=ALL&amp;response=html" target="_blank" rel="noopener">TWSE T86</a>；上櫃股採 <a href="https://www.tpex.org.tw/zh-tw/mainboard/trading/major-institutional/detail/week.html" target="_blank" rel="noopener">TPEx 三大法人</a>。官方股數僅在顯示時四捨五入為張。</li>
+  <li>排序為固定模型：距前高、量能、均線、K/D、流動性，以及法人今日／3／5／10 日方向與連續性；僅供研究優先排序，不等於預測報酬。</li>
+  <li>完整 SAM／Traffic Light 所需的主力行為、基準相對強弱、正式觸發與驗證欄位未齊，因此全數維持「未評估／灰燈」。</li>
+</ul></div>
+  <p class="foot">本報告為每日量價與法人資料的監控摘要，僅供研究使用；實際決策仍應結合個人風險承受度、公司基本面與後續價格確認。</p>
+</main>
+</body>
+</html>
